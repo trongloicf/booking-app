@@ -1,0 +1,43 @@
+export const MOCK_AMENITIES = [
+  { amenityId: 1, amenityName: "Wifi miễn phí", category: 2, status: 1 },
+  { amenityId: 2, amenityName: "Hồ bơi ngoài trời", category: 1, status: 1 },
+  {
+    amenityId: 4,
+    amenityName: "Phòng Gym / Thể hình",
+    category: 1,
+    status: 1,
+  },
+  {
+    amenityId: 5,
+    amenityName: "Dịch vụ Spa & Massage",
+    category: 1,
+    status: 1,
+  },
+  { amenityId: 7, amenityName: "Quầy Bar / Lounge", category: 1, status: 1 },
+  { amenityId: 8, amenityName: "Bữa sáng miễn phí", category: 1, status: 1 },
+  { amenityId: 9, amenityName: "Dịch vụ phòng 24h", category: 2, status: 1 },
+  {
+    amenityId: 10,
+    amenityName: "Bãi đỗ xe miễn phí",
+    category: 1,
+    status: 1,
+  },
+  { amenityId: 12, amenityName: "Điều hòa nhiệt độ", category: 2, status: 0 },
+  {
+    amenityId: 13,
+    amenityName: "Tivi truyền hình cáp",
+    category: 2,
+    status: 1,
+  },
+  {
+    amenityId: 14,
+    amenityName: "Máy pha cà phê / ấm đun nước",
+    category: 2,
+    status: 1,
+  },
+  { amenityId: 17, amenityName: "Bàn làm việc", category: 2, status: 1 },
+  { amenityId: 18, amenityName: "Ban công riêng", category: 2, status: 1 },
+  { amenityId: 19, amenityName: "Thang máy", category: 1, status: 1 },
+  { amenityId: 20, amenityName: "Lễ tân 24/7", category: 1, status: 1 },
+  { amenityId: 21, amenityName: "Dịch vụ giặt ủi", category: 1, status: 1 },
+];
