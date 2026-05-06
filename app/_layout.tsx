@@ -41,6 +41,14 @@ export default function RootLayout() {
             headerLeft: () => <BackIconStack />,
           }}
         />
+        <Stack.Screen
+          name="(auth)/Login"
+          options={{
+            title: "Đăng nhập",
+            headerLeft: () => <BackIconStack />,
+            headerShown: false,
+          }}
+        />
       </Stack>
       <StatusBar style="auto" />
     </PaperProvider>

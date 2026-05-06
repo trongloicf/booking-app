@@ -1,7 +1,7 @@
 import { cardStyles } from "@/src/style/card";
 import { commonStyles } from "@/src/style/common";
 import { FacilityCardItem } from "@/type/facility";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Button, Card, IconButton, Text } from "react-native-paper";
 
 export const FacilityCard = ({
@@ -29,30 +29,23 @@ export const FacilityCard = ({
           onPress={() => console.log("Liked")}
         />
       </View>
-      <Card.Content style={{ paddingTop: 8 }}>
+      <Card.Content style={{ padding: 8 }}>
         <Text style={cardStyles.name}>{item.facilityName}</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.row}>
           <IconButton
             icon="star"
             iconColor="#FFC107"
             size={14}
-            style={{ margin: 0, padding: 0, width: 18 }}
+            style={{ margin: 0, padding: 0, width: "auto" }}
           />
           <Text style={{ fontWeight: "600" }}>{item.star}</Text>
-          <Text style={{ color: "gray", marginLeft: 4 }}>
-            ({item.reviewCount} đánh giá)
-          </Text>
+          <Text style={{ color: "gray" }}>({item.reviewCount} đánh giá)</Text>
         </View>
-        <View style={[commonStyles.row, { alignItems: "center" }]}>
+        <View style={styles.row}>
           <IconButton
-            icon="map-marker"
+            icon="map-marker-radius"
             size={12}
-            style={{ width: "auto", height: 11 }}
+            style={{ margin: 0, padding: 0, width: "auto" }}
           />
           <Text style={cardStyles.city}>{item.cityName}</Text>
         </View>
@@ -65,3 +58,7 @@ export const FacilityCard = ({
     </Card>
   );
 };
+
+const styles = StyleSheet.create({
+  row: { flexDirection: "row", alignItems: "center", gap: 5 },
+});

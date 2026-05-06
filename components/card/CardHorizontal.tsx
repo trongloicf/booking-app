@@ -1,6 +1,7 @@
+import { commonStyles } from "@/src/style/common";
 import { FacilityCardItem } from "@/type/facility";
 import { StyleSheet, View } from "react-native";
-import { Card, IconButton, Text } from "react-native-paper";
+import { Card, Icon, IconButton, Text } from "react-native-paper";
 
 export const FacilityHorizontalCard = ({
   item,
@@ -29,29 +30,20 @@ export const FacilityHorizontalCard = ({
 
           <View style={styles.content}>
             <Card.Content style={styles.cardContent}>
-              <Text style={styles.name}>{item.facilityName}</Text>
-
-              <View style={styles.infoRow}>
-                <IconButton
-                  icon="star"
-                  iconColor="#FFC107"
-                  size={12}
-                  style={styles.smallIcon}
-                />
-                <Text>
-                  {item.star} ({item.reviewCount})
-                </Text>
-              </View>
-
-              <View style={styles.infoRow}>
-                <IconButton
-                  icon="map-marker"
-                  size={12}
-                  style={styles.smallIcon}
-                />
-                <Text variant="bodySmall" numberOfLines={1}>
-                  {item.cityName}
-                </Text>
+              <View style={commonStyles.column}>
+                <Text style={styles.name}>{item.facilityName}</Text>
+                <View style={styles.infoRow}>
+                  <Icon source="star" color="#FFC107" size={14} />
+                  <Text variant="bodySmall" numberOfLines={1}>
+                    {item.star} ({item.reviewCount})
+                  </Text>
+                </View>
+                <View style={styles.infoRow}>
+                  <Icon source="map-marker-radius" size={14} />
+                  <Text variant="bodySmall" numberOfLines={1}>
+                    {item.cityName}
+                  </Text>
+                </View>
               </View>
             </Card.Content>
           </View>
@@ -101,11 +93,7 @@ export const styles = StyleSheet.create({
   infoRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: -10,
-  },
-  smallIcon: {
-    margin: 0,
-    width: 24,
+    gap: 4,
   },
   name: {
     fontWeight: "bold",

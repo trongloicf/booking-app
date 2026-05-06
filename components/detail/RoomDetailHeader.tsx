@@ -2,7 +2,7 @@ import { commonStyles } from "@/src/style/common";
 import { Room } from "@/type/room";
 import { formatVND } from "@/utils/format";
 import { Image, StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import { Icon, Text } from "react-native-paper";
 import { AmenityRadius } from "../card/AmenityRadius";
 import { DescriptionSection } from "./DescriptSection";
 
@@ -38,16 +38,27 @@ export const RoomDetailHeader = ({ room }: { room: Room }) => {
         )} */}
       <AmenityRadius amenityIds={room.amenities || []} />
       <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
-        <View style={commonStyles.column}>
-          <Text>Giá cho 1 đêm</Text>
-          <Text
-            style={[
-              commonStyles.priceColor,
-              { fontSize: 16, fontWeight: "bold" },
-            ]}
-          >
-            {formatVND(room.price)}
-          </Text>
+        <View style={[commonStyles.column, { gap: 5 }]}>
+          <View style={[commonStyles.row, { alignItems: "center", gap: 5 }]}>
+            <Icon source="account" size={16} />
+            <Text variant="bodyMedium" numberOfLines={1}>
+              {room.maxAdults} người lớn
+              {room.maxChildren > 0 && (
+                <Text variant="bodyMedium">, {room.maxChildren} trẻ em</Text>
+              )}
+            </Text>
+          </View>
+          <View style={[commonStyles.row, { alignItems: "center", gap: 5 }]}>
+            <Text>Giá cho 1 đêm</Text>
+            <Text
+              style={[
+                commonStyles.priceColor,
+                { fontSize: 18, fontWeight: "bold" },
+              ]}
+            >
+              {formatVND(room.price)}
+            </Text>
+          </View>
         </View>
       </View>
       <View style={[roomDetailStyles.spaceBlock, roomDetailStyles.p10]}>

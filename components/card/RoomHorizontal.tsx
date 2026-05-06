@@ -1,7 +1,7 @@
 import { commonStyles } from "@/src/style/common";
 import { Room } from "@/type/room";
-import { View } from "react-native";
-import { Button, Card, IconButton, Text } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Button, Card, Icon, Text } from "react-native-paper";
 import { styles } from "./CardHorizontal";
 
 export const RoomHorizontal = ({
@@ -28,7 +28,7 @@ export const RoomHorizontal = ({
                 {item.roomName}
               </Text>
               <View style={[styles.infoRow]}>
-                <IconButton icon="account" size={15} style={styles.smallIcon} />
+                <Icon source="account" size={14} />
                 <Text variant="bodyMedium" numberOfLines={1}>
                   {item.maxAdults} người lớn
                   {item.maxChildren > 0 && (
@@ -59,3 +59,7 @@ export const RoomHorizontal = ({
     </Card>
   );
 };
+
+const roomHorizontal = StyleSheet.create({
+  row: { flexDirection: "row", alignItems: "center", gap: 5 },
+});

@@ -47,4 +47,8 @@ export const commonStyles = StyleSheet.create({
   textColorPrimary: {
     color: "#333",
   },
+  inputPrimary: {
+    borderColor: "#fff",
+    borderRadius: 8,
+  },
 });

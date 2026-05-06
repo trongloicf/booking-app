@@ -1,12 +1,16 @@
 import { commonStyles } from "@/src/style/common";
+import { useRouter } from "expo-router";
 import { View } from "react-native";
-import { Avatar, Text } from "react-native-paper";
+import { Button } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Profile() {
+  const insets = useSafeAreaInsets();
+  const router = useRouter();
   return (
-    <View style={commonStyles.container}>
+    <View style={[commonStyles.container, { paddingTop: insets.top }]}>
       <View style={commonStyles.extendScreen}>
-        <Text variant="titleLarge">Thông tin cá nhân</Text>
+        {/* <Text variant="titleLarge">Thông tin cá nhân</Text>
         <Avatar.Text
           size={64}
           label="HT"
@@ -16,7 +20,7 @@ export default function Profile() {
             commonStyles.bgPrimary,
             commonStyles.avatar,
           ]}
-        />
+        /> */}
         {/* <Card style={commonStyles.mt20}>
         <Card.Title title="Phòng Deluxe" />
         <Card.Content>
@@ -26,6 +30,26 @@ export default function Profile() {
           <Button mode="contained">Đặt ngay</Button>
         </Card.Actions>
       </Card> */}
+        <View
+          style={[
+            commonStyles.column,
+            {
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+        >
+          <Button
+            mode="contained"
+            onPress={() => {
+              router.push({
+                pathname: "/(auth)/Login",
+              });
+            }}
+          >
+            Đăng nhập
+          </Button>
+        </View>
       </View>
     </View>
   );

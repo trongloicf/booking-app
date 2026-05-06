@@ -32,20 +32,17 @@ export default function Home() {
   return (
     <View style={[commonStyles.container, { paddingTop: insets.top }]}>
       <View style={[commonStyles.extendScreen, commonStyles.flex1]}>
+        <SearchBox
+          form={form}
+          onChange={updateField}
+          cities={cities}
+          onSearch={handleSearch}
+        />
         <FlatList
           // numColumns={2}
           // columnWrapperStyle={{
           //   justifyContent: "space-between",
           // }}
-          ListHeaderComponent={
-            <SearchBox
-              form={form}
-              onChange={updateField}
-              cities={cities}
-              onSearch={handleSearch}
-            />
-          }
-          stickyHeaderIndices={[0]}
           data={TRENDING_MOCK}
           renderItem={({ item }) => (
             <FacilityCard
