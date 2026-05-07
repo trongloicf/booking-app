@@ -1,18 +1,14 @@
 import Input from "@/components/auth/Input";
 import { useBackHome } from "@/hooks/custom/useBackHome";
 import { commonStyles } from "@/src/style/common";
-import { showSuccess } from "@/utils/toast";
 import { router } from "expo-router";
-import { useState } from "react";
 import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function Login() {
+export default function Register() {
   const insets = useSafeAreaInsets();
-  const [showPass, setShowPass] = useState<boolean>(false);
   const handleBack = useBackHome();
-  const handleLogin = () => showSuccess("Đăng nhập thành công");
   return (
     <View
       style={[
@@ -35,7 +31,13 @@ export default function Login() {
           >
             Chào mừng trở lại!
           </Text>
+          <Input placeholder="Tên hiển thị" leftIcon="account"></Input>
           <Input placeholder="Email" leftIcon="email-outline"></Input>
+          <Input
+            placeholder="Mật khẩu"
+            leftIcon="lock-outline"
+            isPassword
+          ></Input>
           <Input
             placeholder="Mật khẩu"
             leftIcon="lock-outline"
@@ -44,18 +46,17 @@ export default function Login() {
           <Button
             mode="contained"
             contentStyle={[commonStyles.bgPrimary, { paddingVertical: 3 }]}
-            onPress={handleLogin}
           >
-            Đăng nhập
+            Đăng ký
           </Button>
           <Text style={{ textAlign: "center" }}>
-            Bạn chưa có tài khoản?
+            Bạn đã có tài khoản?
             <Text
               style={{ fontWeight: "bold" }}
-              onPress={() => router.push("/(auth)/Register")}
+              onPress={() => router.push("/(auth)/Login")}
             >
               {" "}
-              Đăng ký
+              Đăng nhập
             </Text>
           </Text>
           <Text

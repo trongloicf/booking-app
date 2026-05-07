@@ -1,12 +1,12 @@
 import { cities } from "@/api/mock/city";
-import { TRENDING_MOCK } from "@/api/mock/trending";
 import { FacilityCard } from "@/components/card/card";
-import SearchBox from "@/components/feature/search/components/SearchBox";
+import SearchBox from "@/components/search/SearchBox";
 import { useSearchForm } from "@/hooks/custom/useSearchForm";
+import { useGetFacilities } from "@/hooks/query/useGetFacilities";
 import { commonStyles } from "@/src/style/common";
 import { trendingStyles } from "@/src/style/trending";
 import { SearchForm } from "@/type/search";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -16,7 +16,6 @@ tomorrow.setDate(today.getDate() + 1);
 
 export default function Home() {
   const insets = useSafeAreaInsets();
-  const router = useRouter();
   const { form, updateField } = useSearchForm({
     keyword: "",
     city: cities[0]?.cityId,
@@ -26,6 +25,7 @@ export default function Home() {
     },
     quantityPerson: { adults: 2, children: 0, room: 1 },
   });
+  const { data: facilities } = useGetFacilities({});
   const handleSearch = (data: SearchForm) => {
     console.log("DATA:", data);
   };
@@ -43,7 +43,7 @@ export default function Home() {
           // columnWrapperStyle={{
           //   justifyContent: "space-between",
           // }}
-          data={TRENDING_MOCK}
+          data={facilities}
           renderItem={({ item }) => (
             <FacilityCard
               item={item}

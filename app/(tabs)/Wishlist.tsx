@@ -2,13 +2,12 @@ import { TRENDING_MOCK } from "@/api/mock/trending";
 import { FacilityHorizontalCard } from "@/components/card/CardHorizontal";
 import { commonStyles } from "@/src/style/common";
 import { trendingStyles } from "@/src/style/trending";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { FlatList, View } from "react-native";
 import { Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Wishlist() {
-  const router = useRouter();
   return (
     <SafeAreaView style={commonStyles.container}>
       <View style={commonStyles.extendScreen}>
@@ -17,7 +16,9 @@ export default function Wishlist() {
           // columnWrapperStyle={{
           //   justifyContent: "space-between",
           // }}
-          ListHeaderComponent={<Text variant="titleLarge">Wishlist</Text>}
+          ListHeaderComponent={
+            <Text variant="titleLarge">Danh sách yêu thích</Text>
+          }
           data={TRENDING_MOCK}
           renderItem={({ item }) => (
             <FacilityHorizontalCard

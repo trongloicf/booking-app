@@ -5,12 +5,11 @@ import { RoomHorizontal } from "@/components/card/RoomHorizontal";
 import { FacilityDetailHeader } from "@/components/detail/FacilityDeatilHeader";
 import { ReviewSection } from "@/components/detail/ReviewSection";
 import { commonStyles } from "@/src/style/common";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { router, useLocalSearchParams, useRouter } from "expo-router";
 import { FlatList, Text, View } from "react-native";
 
 export default function FacilityDetail() {
   const { id } = useLocalSearchParams();
-  const router = useRouter();
   const facility = TRENDING_MOCK.find((f) => f.facilityId.toString() === id);
   const roomsForThisFacility = ROOM_MOCK.filter(
     (room) => room.facilityId.toString() === id,

@@ -1,11 +1,10 @@
 import { ROOM_MOCK } from "@/api/mock/room";
 import { RoomDetailHeader } from "@/components/detail/RoomDetailHeader";
 import { commonStyles } from "@/src/style/common";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function RoomDetail() {
-  const router = useRouter();
   const { id } = useLocalSearchParams();
   const room = ROOM_MOCK.find((r) => r.roomId.toString() === id);
   if (!room) return <Text>Không tìm thấy dữ liệu</Text>;

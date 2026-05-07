@@ -1,12 +1,11 @@
 import { commonStyles } from "@/src/style/common";
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Profile() {
   const insets = useSafeAreaInsets();
-  const router = useRouter();
   return (
     <View style={[commonStyles.container, { paddingTop: insets.top }]}>
       <View style={commonStyles.extendScreen}>
