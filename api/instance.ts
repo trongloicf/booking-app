@@ -1,7 +1,8 @@
 import axios from "axios";
-import Config from "react-native-config";
+import Constants from "expo-constants";
+
+const BASE_URL = Constants.expoConfig?.extra?.BASE_URL;
 
 export const instance = axios.create({
-  baseURL: Config.API_URL,
-  timeout: 10000,
+  baseURL: BASE_URL,
 });

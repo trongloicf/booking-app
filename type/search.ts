@@ -11,7 +11,17 @@ export interface RoomGuestSearch {
 
 export type SearchForm = {
   keyword?: string;
-  city: number;
+  city_id: number;
   dateRange: DateRange;
   quantityPerson: RoomGuestSearch;
 };
+
+export type SearchParams = Partial<{
+  keyword?: string;
+  city_id: number;
+  adults: number;
+  children: number;
+  room: number;
+  checkin: string;
+  checkout: string;
+}>;

@@ -7,7 +7,6 @@ import { TouchableOpacity } from "react-native";
 import FlashMessage from "react-native-flash-message";
 import { Provider as PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
-import "../global.css";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -58,6 +57,13 @@ export default function RootLayout() {
             options={{
               headerLeft: () => <BackIconStack />,
               headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="search/SearchResult"
+            options={{
+              title: "Kết quả tìm kiếm",
+              headerLeft: () => <BackIconStack />,
             }}
           />
         </Stack>

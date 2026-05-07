@@ -3,8 +3,9 @@ export interface FacilityCardItem {
   facilityName: string;
   cityName: string;
   facilityThumbnail: string;
-  star: string;
-  reviewCount: number;
+  avgRating: string;
+  minPrice?: number;
+  totalReviews: number;
   address?: string;
   images?: string[];
   description?: string;

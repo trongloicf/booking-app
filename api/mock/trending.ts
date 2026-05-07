@@ -1,6 +1,4 @@
-import { FacilityCardItem } from "@/type/facility";
-
-export const TRENDING_MOCK: FacilityCardItem[] = [
+export const TRENDING_MOCK = [
   {
     facilityId: 1,
     facilityName: "Bhotel",

@@ -42,7 +42,9 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
   },
   priceColor: {
-    color: "#FE6730",
+    color: "#1E40AF",
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
   textColorPrimary: {
     color: "#333",
