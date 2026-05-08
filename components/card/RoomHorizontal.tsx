@@ -1,5 +1,5 @@
 import { commonStyles } from "@/src/style/common";
-import { Room } from "@/type/room";
+import { Room } from "@/type/interfaces/room";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Icon, Text } from "react-native-paper";
 import { styles } from "./CardHorizontal";

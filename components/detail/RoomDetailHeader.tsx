@@ -1,5 +1,5 @@
 import { commonStyles } from "@/src/style/common";
-import { Room } from "@/type/room";
+import { Room } from "@/type/interfaces/room";
 import { formatVND } from "@/utils/format";
 import { Image, StyleSheet, View } from "react-native";
 import { Icon, Text } from "react-native-paper";

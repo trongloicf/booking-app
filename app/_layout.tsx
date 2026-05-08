@@ -17,7 +17,7 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <PaperProvider>
-        <FlashMessage position="top" />
+        <FlashMessage position="top" floating style={{ zIndex: 999 }} />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen

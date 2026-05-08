@@ -1,7 +1,7 @@
 import Input from "@/components/auth/Input";
 import { useBackHome } from "@/hooks/custom/useBackHome";
+import { usePostLogin } from "@/hooks/mutations/post/usePostLogin";
 import { commonStyles } from "@/src/style/common";
-import { showSuccess } from "@/utils/toast";
 import { router } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
@@ -10,9 +10,18 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Login() {
   const insets = useSafeAreaInsets();
-  const [showPass, setShowPass] = useState<boolean>(false);
   const handleBack = useBackHome();
-  const handleLogin = () => showSuccess("Đăng nhập thành công");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const { mutate: login, isPending: isLogin } = usePostLogin();
+
+  const handleLogin = () => {
+    login({
+      user_email: email,
+      user_pass: password,
+    });
+  };
+
   return (
     <View
       style={[
@@ -35,15 +44,25 @@ export default function Login() {
           >
             Chào mừng trở lại!
           </Text>
-          <Input placeholder="Email" leftIcon="email-outline"></Input>
+          <Input
+            placeholder="Email"
+            leftIcon="email-outline"
+            value={email}
+            onChangeText={setEmail}
+            disabled={isLogin}
+          ></Input>
           <Input
             placeholder="Mật khẩu"
             leftIcon="lock-outline"
             isPassword
+            value={password}
+            onChangeText={setPassword}
+            disabled={isLogin}
           ></Input>
           <Button
             mode="contained"
             contentStyle={[commonStyles.bgPrimary, { paddingVertical: 3 }]}
+            disabled={isLogin}
             onPress={handleLogin}
           >
             Đăng nhập

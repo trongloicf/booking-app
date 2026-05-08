@@ -1,6 +1,6 @@
 import { MOCK_AMENITIES } from "@/api/mock/amenity";
+import { Amenity } from "@/type/interfaces/amenity";
 import { getAmenityConfig } from "@/utils/helperIconAmenity";
-import { Amenity } from "@/type/amenity";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";

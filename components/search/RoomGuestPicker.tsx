@@ -1,14 +1,14 @@
-import { RoomGuestSearch } from "@/type/search";
+import { RoomGuestSearch } from "@/type/interfaces/search";
 import { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import {
-  Button,
-  Divider,
-  IconButton,
-  Modal,
-  Portal,
-  Text,
-  TextInput,
+    Button,
+    Divider,
+    IconButton,
+    Modal,
+    Portal,
+    Text,
+    TextInput,
 } from "react-native-paper";
 
 export const RoomGuestPicker = ({

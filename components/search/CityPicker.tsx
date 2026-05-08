@@ -1,4 +1,4 @@
-import { City } from "@/type/city";
+import { City } from "@/type/interfaces/city";
 import { useMemo, useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import { Menu, TextInput } from "react-native-paper";

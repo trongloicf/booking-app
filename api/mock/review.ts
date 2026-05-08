@@ -1,4 +1,4 @@
-import { ReviewItem } from "@/type/facility";
+import { ReviewItem } from "@/type/interfaces/facility";
 
 export const MOCK_REVIEWS: ReviewItem[] = [
   {

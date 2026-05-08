@@ -1,5 +1,5 @@
 import { FacilityCard } from "@/components/card/card";
-import { useGetFacilities } from "@/hooks/query/useGetFacilities";
+import { useGetFacilities } from "@/hooks/queries/useGetFacilities";
 import { commonStyles } from "@/src/style/common";
 import { trendingStyles } from "@/src/style/trending";
 import { parseSearchParams } from "@/utils/parseSearchParams";

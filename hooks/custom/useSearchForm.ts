@@ -1,4 +1,4 @@
-import { SearchForm } from "@/type/search";
+import { SearchForm } from "@/type/interfaces/search";
 import { useState } from "react";
 
 export const useSearchForm = (initial: SearchForm) => {

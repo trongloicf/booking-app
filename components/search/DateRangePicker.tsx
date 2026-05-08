@@ -1,5 +1,5 @@
 import { commonStyles } from "@/src/style/common";
-import { DateRange } from "@/type/search";
+import { DateRange } from "@/type/interfaces/search";
 import { formatDateVN } from "@/utils/format";
 import { useState } from "react";
 import { TouchableOpacity, View } from "react-native";

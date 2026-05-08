@@ -1,6 +1,6 @@
 import { cardStyles } from "@/src/style/card";
 import { commonStyles } from "@/src/style/common";
-import { FacilityCardItem } from "@/type/facility";
+import { FacilityCardItem } from "@/type/interfaces/facility";
 import { formatVND } from "@/utils/format";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, IconButton, Text } from "react-native-paper";

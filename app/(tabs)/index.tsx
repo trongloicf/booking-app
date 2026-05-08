@@ -2,10 +2,10 @@ import { cities } from "@/api/mock/city";
 import { FacilityCard } from "@/components/card/card";
 import SearchBox from "@/components/search/SearchBox";
 import { useSearchForm } from "@/hooks/custom/useSearchForm";
-import { useGetFacilities } from "@/hooks/query/useGetFacilities";
+import { useGetFacilities } from "@/hooks/queries/useGetFacilities";
 import { commonStyles } from "@/src/style/common";
 import { trendingStyles } from "@/src/style/trending";
-import { SearchForm, SearchParams } from "@/type/search";
+import { SearchForm, SearchParams } from "@/type/interfaces/search";
 import { useRouter } from "expo-router";
 import { FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -27,8 +27,8 @@ export default function Home() {
     quantityPerson: { adults: 2, children: 0, room: 1 },
   });
   const { data } = useGetFacilities({});
-  const facilities = data?.data;
-  console.log(facilities);
+  const facilities = data?.data || [];
+  console.log("cơ sở", facilities);
   const handleSearch = (form: SearchForm) => {
     const params: SearchParams = {
       keyword: form.keyword,

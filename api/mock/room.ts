@@ -1,4 +1,4 @@
-import { Room } from "@/type/room";
+import { Room } from "@/type/interfaces/room";
 
 export const ROOM_MOCK: Room[] = [
   {

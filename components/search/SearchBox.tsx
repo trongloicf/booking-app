@@ -2,8 +2,8 @@ import React from "react";
 import { View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 
-import { City } from "@/type/city";
-import { SearchForm } from "@/type/search";
+import { City } from "@/type/interfaces/city";
+import { SearchForm } from "@/type/interfaces/search";
 import { CityPicker } from "./CityPicker";
 import { DateRangePicker } from "./DateRangePicker";
 import { RoomGuestPicker } from "./RoomGuestPicker";
@@ -30,8 +30,8 @@ export default function SearchBox({
       />
 
       <CityPicker
-        value={form.city}
-        onChange={(city) => onChange("city", city)}
+        value={form.city_id}
+        onChange={(city) => onChange("city_id", city)}
         cities={cities}
       />
 
