@@ -25,3 +25,16 @@ export type SearchParams = Partial<{
   checkin: string;
   checkout: string;
 }>;
+
+export interface RequestDetail {
+  facilityId: number;
+  params?: DetailParams;
+}
+
+export type DetailParams = Partial<{
+  checkin: string;
+  checkout: string;
+  adults: number;
+  children: number;
+  room: number;
+}>;

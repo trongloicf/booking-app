@@ -5,7 +5,7 @@ import { useSearchForm } from "@/hooks/custom/useSearchForm";
 import { useGetFacilities } from "@/hooks/queries/useGetFacilities";
 import { commonStyles } from "@/src/style/common";
 import { trendingStyles } from "@/src/style/trending";
-import { SearchForm, SearchParams } from "@/type/interfaces/search";
+import { SearchForm, SearchParams } from "@/type/interfaces/params";
 import { useRouter } from "expo-router";
 import { FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

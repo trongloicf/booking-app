@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   moreButton: {
-    marginTop: 8,
     paddingVertical: 12,
     borderRadius: 10,
     backgroundColor: "#f8f9fa",

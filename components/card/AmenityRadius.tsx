@@ -1,4 +1,3 @@
-import { MOCK_AMENITIES } from "@/api/mock/amenity";
 import { Amenity } from "@/type/interfaces/amenity";
 import { getAmenityConfig } from "@/utils/helperIconAmenity";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -6,11 +5,7 @@ import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Surface, Text } from "react-native-paper";
 
-export const AmenityRadius = ({ amenityIds }: { amenityIds: number[] }) => {
-  const displayData = MOCK_AMENITIES.filter((item) =>
-    amenityIds.includes(item.amenityId),
-  );
-
+export const AmenityRadius = ({ amenities }: { amenities: Amenity[] }) => {
   const renderItem = ({ item }: { item: Amenity }) => {
     const config = getAmenityConfig(item.amenityName);
 
@@ -28,11 +23,12 @@ export const AmenityRadius = ({ amenityIds }: { amenityIds: number[] }) => {
       </View>
     );
   };
+  console.log(amenities);
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={displayData}
+        data={amenities}
         renderItem={renderItem}
         keyExtractor={(item) => item.amenityId.toString()}
         horizontal

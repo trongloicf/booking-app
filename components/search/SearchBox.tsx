@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 
 import { City } from "@/type/interfaces/city";
-import { SearchForm } from "@/type/interfaces/search";
+import { SearchForm } from "@/type/interfaces/params";
 import { CityPicker } from "./CityPicker";
 import { DateRangePicker } from "./DateRangePicker";
 import { RoomGuestPicker } from "./RoomGuestPicker";

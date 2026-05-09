@@ -1,4 +1,4 @@
-import { RoomGuestSearch } from "@/type/interfaces/search";
+import { RoomGuestSearch } from "@/type/interfaces/params";
 import { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import {

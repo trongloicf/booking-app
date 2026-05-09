@@ -9,3 +9,16 @@ export interface Room {
   maxAdults: number;
   maxChildren: number;
 }
+
+export interface RoomFacility {
+  availableQuantity: number;
+  bedName: string;
+  maxAdults: number;
+  maxChildren: number;
+  price: string;
+  roomArea: number;
+  roomId: number;
+  roomName: string;
+  roomThumbnail: string;
+  roomTypeName: string;
+}

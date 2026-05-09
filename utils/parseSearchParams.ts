@@ -1,4 +1,4 @@
-import { SearchParams } from "@/type/interfaces/search";
+import { SearchParams } from "@/type/interfaces/params";
 
 export const parseSearchParams = (params: any): SearchParams => ({
   keyword: params.keyword?.trim() || undefined,

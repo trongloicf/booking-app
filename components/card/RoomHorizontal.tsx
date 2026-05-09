@@ -1,5 +1,6 @@
 import { commonStyles } from "@/src/style/common";
 import { Room } from "@/type/interfaces/room";
+import { formatVND } from "@/utils/format";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Icon, Text } from "react-native-paper";
 import { styles } from "./CardHorizontal";
@@ -42,7 +43,7 @@ export const RoomHorizontal = ({
                 <Text variant="bodyMedium" numberOfLines={1}>
                   Giá:{" "}
                   <Text style={[commonStyles.priceColor]}>
-                    {item.price.toLocaleString()} VND
+                    {formatVND(item.price)}
                   </Text>
                   <Text style={[commonStyles.textColorPrimary]}>/ đêm</Text>
                 </Text>

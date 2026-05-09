@@ -3,7 +3,6 @@ import { Room } from "@/type/interfaces/room";
 import { formatVND } from "@/utils/format";
 import { Image, StyleSheet, View } from "react-native";
 import { Icon, Text } from "react-native-paper";
-import { AmenityRadius } from "../card/AmenityRadius";
 import { DescriptionSection } from "./DescriptSection";
 
 export const RoomDetailHeader = ({ room }: { room: Room }) => {
@@ -36,7 +35,7 @@ export const RoomDetailHeader = ({ room }: { room: Room }) => {
             )}
             />
         )} */}
-      <AmenityRadius amenityIds={room.amenities || []} />
+      {/* <AmenityRadius amenities={room.amenities || []} /> */}
       <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
         <View style={[commonStyles.column, { gap: 5 }]}>
           <View style={[commonStyles.row, { alignItems: "center", gap: 5 }]}>

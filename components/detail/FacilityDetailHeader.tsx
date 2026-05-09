@@ -1,5 +1,6 @@
 import { commonStyles } from "@/src/style/common";
-import { FacilityCardItem } from "@/type/interfaces/facility";
+import { Amenity } from "@/type/interfaces/amenity";
+import { FacilityDetail, ImageFacility } from "@/type/interfaces/facility";
 import { FlatList, Image, StyleSheet, View } from "react-native";
 import { IconButton, Text } from "react-native-paper";
 import { AmenityRadius } from "../card/AmenityRadius";
@@ -7,9 +8,14 @@ import { DescriptionSection } from "./DescriptSection";
 
 export const FacilityDetailHeader = ({
   facility,
+  amenities,
+  images,
 }: {
-  facility: FacilityCardItem;
+  facility: FacilityDetail;
+  amenities: Amenity[];
+  images: ImageFacility[];
 }) => {
+  console.log(facility);
   return (
     <View style={{ position: "relative" }}>
       <View style={{ paddingHorizontal: 10, paddingVertical: 10 }}>
@@ -25,12 +31,12 @@ export const FacilityDetailHeader = ({
               style={{ margin: 0, padding: 0, width: 18 }}
             />
             <Text style={[{ fontWeight: "600" }, commonStyles.textWhite]}>
-              {facility.star}
+              {facility.avgRating}
             </Text>
             <Text
               style={[{ color: "gray", marginLeft: 4 }, commonStyles.textWhite]}
             >
-              ({facility.reviewCount} đánh giá)
+              ({facility.totalReviews} đánh giá)
             </Text>
           </View>
         </View>
@@ -40,7 +46,7 @@ export const FacilityDetailHeader = ({
             size={12}
             style={{ width: "auto", height: 11 }}
           />
-          {facility.address || "Địa chỉ không xác định"}
+          {facility.facilityAddress || "Địa chỉ không xác định"}
         </Text>
       </View>
       <View style={{ position: "relative" }}>
@@ -56,10 +62,10 @@ export const FacilityDetailHeader = ({
           onPress={() => console.log("Liked")}
         />
       </View>
-      {facility.images && (
+      {images && (
         <FlatList
           horizontal
-          data={facility.images}
+          data={images}
           keyExtractor={(_, index) => index.toString()}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
@@ -68,21 +74,30 @@ export const FacilityDetailHeader = ({
           }}
           renderItem={({ item }) => (
             <Image
-              source={{ uri: item }}
+              source={{ uri: item.imageUrl }}
               style={facilityDetailStyles.imageMain}
             />
           )}
         />
       )}
-      <AmenityRadius amenityIds={facility.facilityAmenity || []} />
+      <AmenityRadius amenities={amenities || []} />
 
-      <View style={{ paddingHorizontal: 10, paddingTop: 10 }}>
+      <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
         <DescriptionSection
           title="Mô tả cơ sở"
-          text={facility.description || "Không có mô tả"}
+          text={facility.facilityDesc || "Không có mô tả"}
         />
-        <Text style={{ fontSize: 15 }}>Phòng còn trống</Text>
       </View>
+      <Text
+        style={{
+          fontSize: 15,
+          borderTopWidth: 5,
+          borderTopColor: "#f5f5f5",
+          paddingHorizontal: 10,
+        }}
+      >
+        Phòng còn trống
+      </Text>
     </View>
   );
 };

@@ -3,6 +3,7 @@ import { storage } from "@/utils/authWrapper";
 import { showError, showSuccess } from "@/utils/toast";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { router } from "expo-router";
 
 export const usePostLogin = () => {
   return useMutation({
@@ -12,6 +13,9 @@ export const usePostLogin = () => {
     onSuccess: async (res) => {
       try {
         await storage.setAuth(res.token, res.user);
+        router.push({
+          pathname: "/(tabs)",
+        });
         showSuccess("Đăng nhập thành công");
       } catch (err) {
         showError("Không thể lưu thông tin đăng nhập");

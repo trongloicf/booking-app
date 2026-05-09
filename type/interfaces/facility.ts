@@ -1,3 +1,5 @@
+import { Room } from "./room";
+
 export interface FacilityCardItem {
   facilityId: number;
   facilityName: string;
@@ -18,11 +20,13 @@ export interface FacilityDetail {
   facilityName: string;
   cityName: string;
   facilityThumbnail: string;
-  star: string;
-  reviewCount: number;
+  facilityAddress: string;
+  facilityDesc: string;
+  avgRating: string;
+  minPrice?: number;
+  totalReviews: number;
   images?: string[];
-  description?: string;
-  rooms: number[];
+  rooms: Room[];
 }
 
 export interface Amenity {
@@ -42,4 +46,9 @@ export interface ReviewItem {
 
 export interface ReviewSectionProps {
   reviews: ReviewItem[];
+}
+
+export interface ImageFacility {
+  facilityImagesId: number;
+  imageUrl: string;
 }

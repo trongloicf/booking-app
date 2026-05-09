@@ -48,10 +48,7 @@ export const DescriptionSection = ({
       </Text>
 
       {isTruncated && (
-        <TouchableOpacity
-          onPress={() => setExpanded(!expanded)}
-          style={{ marginTop: 4 }}
-        >
+        <TouchableOpacity onPress={() => setExpanded(!expanded)}>
           <Text style={styles.readMore}>
             {expanded ? "Thu gọn" : "Xem thêm"}
           </Text>

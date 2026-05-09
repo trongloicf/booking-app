@@ -1,5 +1,5 @@
 import { facilityService } from "@/api/services/facility.service";
-import { SearchParams } from "@/type/interfaces/search";
+import { SearchParams } from "@/type/interfaces/params";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export const useGetFacilities = (params: SearchParams) =>

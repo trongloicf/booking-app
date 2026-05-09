@@ -1,4 +1,4 @@
-import { SearchParams } from "@/type/interfaces/search";
+import { RequestDetail, SearchParams } from "@/type/interfaces/params";
 import { instance } from "../instance";
 
 const facilities = "facilities";
@@ -9,5 +9,11 @@ export const facilityService = {
       data: res.data.data,
       pagination: res.data.pagination,
     };
+  },
+  getFacilityDetail: async (req: RequestDetail) => {
+    const res = await instance.get(`/${facilities}/public/${req.facilityId}`, {
+      params: req.params,
+    });
+    return res.data.data;
   },
 };
