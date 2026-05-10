@@ -22,3 +22,24 @@ export interface RoomFacility {
   roomThumbnail: string;
   roomTypeName: string;
 }
+
+export interface RoomDetail {
+  roomId: number;
+  roomName: string;
+  roomDesc: string;
+  roomTypeName: string;
+  bedName: string;
+  facilityName: string;
+  facilityAddress: string;
+  roomThumbnail: string;
+  price: string;
+  roomArea: number;
+  maxAdults: number;
+  maxChildren: number;
+  maxOccupancy: number;
+}
+
+// params
+export interface RoomDetailRequest {
+  roomId: number;
+}

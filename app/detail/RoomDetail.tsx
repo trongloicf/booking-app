@@ -1,18 +1,22 @@
-import { ROOM_MOCK } from "@/api/mock/room";
 import { RoomDetailHeader } from "@/components/detail/RoomDetailHeader";
+import { useGetDetailRoom } from "@/hooks/queries/useGetDetailRoom";
 import { commonStyles } from "@/src/style/common";
 import { router, useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function RoomDetail() {
   const { id } = useLocalSearchParams();
-  const room = ROOM_MOCK.find((r) => r.roomId.toString() === id);
-  if (!room) return <Text>Không tìm thấy dữ liệu</Text>;
+  const roomId = Number(id);
+  const { data: result } = useGetDetailRoom({
+    roomId: roomId,
+  });
+  console.log(result.room);
+  if (!result) return <Text>Không tìm thấy dữ liệu</Text>;
 
   return (
     <View style={[commonStyles.container]}>
       <View style={{ flex: 1, backgroundColor: "white" }}>
-        <RoomDetailHeader room={room} />
+        <RoomDetailHeader room={result.room} />
         <View style={styles.footerContainer}>
           <TouchableOpacity
             style={styles.bookingButton}

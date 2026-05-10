@@ -2,11 +2,13 @@ import { MOCK_REVIEWS } from "@/api/mock/review";
 import { ROOM_MOCK } from "@/api/mock/room";
 import { RoomHorizontal } from "@/components/card/RoomHorizontal";
 import { FacilityDetailHeader } from "@/components/detail/FacilityDetailHeader";
+import { PolicySection } from "@/components/detail/PolicySection";
 import { ReviewSection } from "@/components/detail/ReviewSection";
 import { useGetDetailFacility } from "@/hooks/queries/useGetDetailFacility";
 import { commonStyles } from "@/src/style/common";
 import { router, useLocalSearchParams } from "expo-router";
 import { FlatList, Text, View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function FacilityDetail() {
   const { id } = useLocalSearchParams();
@@ -22,6 +24,9 @@ export default function FacilityDetail() {
     (review) => review.facilityId.toString() === id,
   );
   if (!result) return <Text>Không tìm thấy dữ liệu</Text>;
+  if (isLoadingDetailFacility) {
+    return <ActivityIndicator animating={true} color="#ccc" />;
+  }
 
   return (
     <View style={[commonStyles.container]}>
@@ -47,7 +52,10 @@ export default function FacilityDetail() {
             />
           )}
           ListFooterComponent={() => (
-            <ReviewSection reviews={reviewsForThisFacility} />
+            <View>
+              <ReviewSection reviews={reviewsForThisFacility} />
+              <PolicySection policy={result.policies} />
+            </View>
           )}
           ListEmptyComponent={
             <Text style={{ paddingHorizontal: 10 }}>

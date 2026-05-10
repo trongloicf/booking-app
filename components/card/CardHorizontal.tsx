@@ -35,7 +35,7 @@ export const FacilityHorizontalCard = ({
                 <View style={styles.infoRow}>
                   <Icon source="star" color="#FFC107" size={14} />
                   <Text variant="bodySmall" numberOfLines={1}>
-                    {item.star} ({item.reviewCount})
+                    {item.avgRating} ({item.totalReviews})
                   </Text>
                 </View>
                 <View style={styles.infoRow}>
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    height: 140,
+    height: 150,
   },
   imageContainer: {
     flex: 1.2,
@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
   },
   cardContent: {
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingTop: 8,
   },
   wishlistBtn: {
     position: "absolute",

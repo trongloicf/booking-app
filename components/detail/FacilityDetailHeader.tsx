@@ -4,7 +4,7 @@ import { FacilityDetail, ImageFacility } from "@/type/interfaces/facility";
 import { FlatList, Image, StyleSheet, View } from "react-native";
 import { IconButton, Text } from "react-native-paper";
 import { AmenityRadius } from "../card/AmenityRadius";
-import { DescriptionSection } from "./DescriptSection";
+import { DescriptionSection, stylesDesc } from "./DescriptSection";
 
 export const FacilityDetailHeader = ({
   facility,
@@ -89,12 +89,15 @@ export const FacilityDetailHeader = ({
         />
       </View>
       <Text
-        style={{
-          fontSize: 15,
-          borderTopWidth: 5,
-          borderTopColor: "#f5f5f5",
-          paddingHorizontal: 10,
-        }}
+        style={[
+          stylesDesc.title,
+          {
+            borderTopWidth: 5,
+            borderTopColor: "#f5f5f5",
+            paddingHorizontal: 10,
+            paddingTop: 8,
+          },
+        ]}
       >
         Phòng còn trống
       </Text>

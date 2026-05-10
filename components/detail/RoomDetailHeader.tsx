@@ -1,11 +1,11 @@
 import { commonStyles } from "@/src/style/common";
-import { Room } from "@/type/interfaces/room";
+import { RoomDetail } from "@/type/interfaces/room";
 import { formatVND } from "@/utils/format";
 import { Image, StyleSheet, View } from "react-native";
 import { Icon, Text } from "react-native-paper";
 import { DescriptionSection } from "./DescriptSection";
 
-export const RoomDetailHeader = ({ room }: { room: Room }) => {
+export const RoomDetailHeader = ({ room }: { room: RoomDetail }) => {
   return (
     <View style={{ position: "relative" }}>
       <View style={{ paddingHorizontal: 10, paddingVertical: 10 }}>
@@ -55,7 +55,7 @@ export const RoomDetailHeader = ({ room }: { room: Room }) => {
                 { fontSize: 18, fontWeight: "bold" },
               ]}
             >
-              {formatVND(room.price)}
+              {formatVND(Number(room.price))}
             </Text>
           </View>
         </View>
@@ -63,7 +63,7 @@ export const RoomDetailHeader = ({ room }: { room: Room }) => {
       <View style={[roomDetailStyles.spaceBlock, roomDetailStyles.p10]}>
         <DescriptionSection
           title="Mô tả phòng"
-          text={room.roomDescription || "Không có mô tả"}
+          text={room.roomDesc || "Không có mô tả"}
         />
       </View>
     </View>

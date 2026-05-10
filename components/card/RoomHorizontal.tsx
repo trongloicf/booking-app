@@ -1,5 +1,5 @@
 import { commonStyles } from "@/src/style/common";
-import { Room } from "@/type/interfaces/room";
+import { RoomFacility } from "@/type/interfaces/room";
 import { formatVND } from "@/utils/format";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Icon, Text } from "react-native-paper";
@@ -9,7 +9,7 @@ export const RoomHorizontal = ({
   item,
   onPress,
 }: {
-  item: Room;
+  item: RoomFacility;
   onPress: () => void;
 }) => {
   return (
@@ -43,11 +43,16 @@ export const RoomHorizontal = ({
                 <Text variant="bodyMedium" numberOfLines={1}>
                   Giá:{" "}
                   <Text style={[commonStyles.priceColor]}>
-                    {formatVND(item.price)}
+                    {formatVND(Number(item.price))}
                   </Text>
                   <Text style={[commonStyles.textColorPrimary]}>/ đêm</Text>
                 </Text>
               </View>
+              {item.availableQuantity && (
+                <Text style={{ color: "red" }}>
+                  Còn {item.availableQuantity} phòng trống
+                </Text>
+              )}
             </Card.Content>
             <Card.Actions>
               <Button style={[commonStyles.bgPrimary]} onPress={onPress}>

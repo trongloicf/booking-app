@@ -33,23 +33,26 @@ export const DescriptionSection = ({
 
   return (
     <View>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={stylesDesc.title}>{title}</Text>
       {!isMeasured && (
         <Text
-          style={[styles.description, styles.hiddenMeasurer]}
+          style={[stylesDesc.description, stylesDesc.hiddenMeasurer]}
           onTextLayout={onTextLayout}
         >
           {text}
         </Text>
       )}
 
-      <Text numberOfLines={expanded ? undefined : 3} style={styles.description}>
+      <Text
+        numberOfLines={expanded ? undefined : 3}
+        style={stylesDesc.description}
+      >
         {text}
       </Text>
 
       {isTruncated && (
         <TouchableOpacity onPress={() => setExpanded(!expanded)}>
-          <Text style={styles.readMore}>
+          <Text style={stylesDesc.readMore}>
             {expanded ? "Thu gọn" : "Xem thêm"}
           </Text>
         </TouchableOpacity>
@@ -58,7 +61,7 @@ export const DescriptionSection = ({
   );
 };
 
-const styles = StyleSheet.create({
+export const stylesDesc = StyleSheet.create({
   title: { fontSize: 16, fontWeight: "bold", marginBottom: 4 },
   description: { fontSize: 14, color: "#444", lineHeight: 20 },
   readMore: { color: "#2b4785", fontWeight: "bold" },

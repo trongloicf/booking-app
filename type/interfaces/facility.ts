@@ -48,6 +48,15 @@ export interface ReviewSectionProps {
   reviews: ReviewItem[];
 }
 
+export interface Policy {
+  policyId: 1;
+  cancelPolicy: string;
+  checkinTime: string;
+  checkoutTime: string;
+  petAllowed: boolean;
+  smokingAllowed: boolean;
+}
+
 export interface ImageFacility {
   facilityImagesId: number;
   imageUrl: string;
