@@ -1,4 +1,5 @@
 import { commonStyles } from "@/src/style/common";
+import { DateRange } from "@/type/interfaces/params";
 import { RoomFacility } from "@/type/interfaces/room";
 import { formatVND } from "@/utils/format";
 import { StyleSheet, View } from "react-native";
@@ -8,10 +9,13 @@ import { styles } from "./CardHorizontal";
 export const RoomHorizontal = ({
   item,
   onPress,
+  dateRange,
 }: {
+  dateRange?: DateRange;
   item: RoomFacility;
   onPress: () => void;
 }) => {
+  console.log("daterange from fa -> rom hor", dateRange);
   return (
     <Card style={styles.card} onPress={onPress}>
       <View style={styles.containerInner}>
@@ -56,7 +60,7 @@ export const RoomHorizontal = ({
             </Card.Content>
             <Card.Actions>
               <Button style={[commonStyles.bgPrimary]} onPress={onPress}>
-                <Text style={commonStyles.textWhite}>Xem chi tiết</Text>
+                <Text style={commonStyles.textWhite}>Chọn phòng</Text>
               </Button>
             </Card.Actions>
           </View>

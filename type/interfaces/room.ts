@@ -1,3 +1,5 @@
+import { DateRange } from "./params";
+
 export interface Room {
   roomId: number;
   facilityId: number;
@@ -42,4 +44,5 @@ export interface RoomDetail {
 // params
 export interface RoomDetailRequest {
   roomId: number;
+  params: DateRange;
 }

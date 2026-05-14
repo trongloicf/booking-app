@@ -1,23 +1,39 @@
 import { ReviewSectionProps } from "@/type/interfaces/facility";
+import { formatReviewDate } from "@/utils/day";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Text } from "react-native-paper";
 
 export const ReviewSection = ({ reviews }: ReviewSectionProps) => {
-  if (!reviews || reviews.length === 0) return null;
+  if (!reviews || reviews.length === 0)
+    return (
+      <View style={[styles.sectionContainer, { paddingBottom: 0 }]}>
+        <Text style={styles.sectionTitle}>Cơ sở chưa có đánh giá nào</Text>
+      </View>
+    );
+
+  const displayReviews = reviews.slice(0, 2);
 
   return (
     <View style={styles.sectionContainer}>
-      <Text style={styles.sectionTitle}>Đánh giá khách hàng</Text>
+      <Text style={styles.sectionTitle}>
+        Đánh giá khách hàng ({reviews.length})
+      </Text>
 
-      {reviews.map((item) => (
+      {displayReviews.map((item) => (
         <View key={item.reviewId} style={styles.reviewCard}>
           <View style={styles.reviewHeader}>
             <View style={styles.userInfo}>
-              <Image source={{ uri: item.avatar }} style={styles.avatar} />
+              <Image
+                source={require("@/assets/images/user_avatar_default.png")}
+                style={styles.avatar}
+              />
               <View style={styles.nameContainer}>
                 <Text style={styles.userName}>{item.userName}</Text>
-                <Text style={styles.reviewDate}>{item.date}</Text>
+                <Text style={styles.reviewDate}>
+                  {formatReviewDate(item.createdAt)}
+                </Text>
               </View>
             </View>
 

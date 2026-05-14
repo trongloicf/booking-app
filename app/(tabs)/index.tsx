@@ -66,7 +66,11 @@ export default function Home() {
               onPress={() => {
                 router.push({
                   pathname: "/detail/FacilityDetail",
-                  params: { id: item.facilityId },
+                  params: {
+                    id: item.facilityId,
+                    checkin: form.dateRange.checkin,
+                    checkout: form.dateRange.checkout,
+                  },
                 });
               }}
             />

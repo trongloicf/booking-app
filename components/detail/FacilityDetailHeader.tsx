@@ -99,7 +99,7 @@ export const FacilityDetailHeader = ({
           },
         ]}
       >
-        Phòng còn trống
+        Phòng có sẵn
       </Text>
     </View>
   );

@@ -1,3 +1,4 @@
+import { ReviewForFacility, ReviewForRoom } from "./review";
 import { Room } from "./room";
 
 export interface FacilityCardItem {
@@ -45,11 +46,11 @@ export interface ReviewItem {
 }
 
 export interface ReviewSectionProps {
-  reviews: ReviewItem[];
+  reviews?: ReviewForFacility[] | ReviewForRoom[];
 }
 
 export interface Policy {
-  policyId: 1;
+  policyId: number;
   cancelPolicy: string;
   checkinTime: string;
   checkoutTime: string;

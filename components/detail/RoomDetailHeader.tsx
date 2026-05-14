@@ -1,16 +1,37 @@
 import { commonStyles } from "@/src/style/common";
+import { Amenity } from "@/type/interfaces/amenity";
+import { DateRange } from "@/type/interfaces/params";
+import { ReviewForRoom } from "@/type/interfaces/review";
 import { RoomDetail } from "@/type/interfaces/room";
 import { formatVND } from "@/utils/format";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { Icon, Text } from "react-native-paper";
+import { AmenityRadius } from "../card/AmenityRadius";
 import { DescriptionSection } from "./DescriptSection";
+import { ReviewSection } from "./ReviewSection";
+import { SubDesc } from "./SubDesc";
 
-export const RoomDetailHeader = ({ room }: { room: RoomDetail }) => {
+export const RoomDetailHeader = ({
+  room,
+  amenities,
+  available,
+  reviews,
+  dateRange,
+}: {
+  room: RoomDetail;
+  amenities: Amenity[];
+  available?: number;
+  reviews?: ReviewForRoom[];
+  dateRange?: DateRange;
+}) => {
   return (
-    <View style={{ position: "relative" }}>
+    <ScrollView style={{ position: "relative" }}>
       <View style={{ paddingHorizontal: 10, paddingVertical: 10 }}>
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>
           {room.roomName}
+        </Text>
+        <Text variant="bodySmall">
+          {room.facilityName} - {room.facilityAddress}
         </Text>
       </View>
       <Image
@@ -35,7 +56,7 @@ export const RoomDetailHeader = ({ room }: { room: RoomDetail }) => {
             )}
             />
         )} */}
-      {/* <AmenityRadius amenities={room.amenities || []} /> */}
+      <AmenityRadius amenities={amenities || []} />
       <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
         <View style={[commonStyles.column, { gap: 5 }]}>
           <View style={[commonStyles.row, { alignItems: "center", gap: 5 }]}>
@@ -45,6 +66,14 @@ export const RoomDetailHeader = ({ room }: { room: RoomDetail }) => {
               {room.maxChildren > 0 && (
                 <Text variant="bodyMedium">, {room.maxChildren} trẻ em</Text>
               )}
+            </Text>
+            <Icon source="bed-empty" size={16} />
+            <Text variant="bodyMedium" numberOfLines={1}>
+              {room.bedName}
+            </Text>
+            <Icon source="home-switch" size={16} />
+            <Text variant="bodyMedium" numberOfLines={1}>
+              {room.roomArea} m²
             </Text>
           </View>
           <View style={[commonStyles.row, { alignItems: "center", gap: 5 }]}>
@@ -65,8 +94,10 @@ export const RoomDetailHeader = ({ room }: { room: RoomDetail }) => {
           title="Mô tả phòng"
           text={room.roomDesc || "Không có mô tả"}
         />
+        <SubDesc title="Diện tích phòng" text={room.roomArea} subText="m²" />
       </View>
-    </View>
+      <ReviewSection reviews={reviews} />
+    </ScrollView>
   );
 };
 
@@ -81,7 +112,7 @@ export const roomDetailStyles = StyleSheet.create({
   },
   spaceBlock: {
     borderColor: "#eee",
-    borderTopWidth: 8,
+    borderTopWidth: 5,
   },
   p10: {
     paddingHorizontal: 10,

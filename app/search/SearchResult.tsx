@@ -2,13 +2,17 @@ import { FacilityCard } from "@/components/card/card";
 import { useGetFacilities } from "@/hooks/queries/useGetFacilities";
 import { commonStyles } from "@/src/style/common";
 import { trendingStyles } from "@/src/style/trending";
-import { parseSearchParams } from "@/utils/parseSearchParams";
+import {
+  parseDetailParams,
+  parseSearchParams,
+} from "@/utils/parseSearchParams";
 import { router, useLocalSearchParams } from "expo-router";
 import { FlatList, View } from "react-native";
 
 export default function SearchResult() {
   const params = useLocalSearchParams();
   const parseParams = parseSearchParams(params);
+  const sendParams = parseDetailParams(params);
   const { data } = useGetFacilities(parseParams);
   console.log("params gửi API:", parseParams);
   const facilities = data?.data;
@@ -27,7 +31,7 @@ export default function SearchResult() {
               onPress={() => {
                 router.push({
                   pathname: "/detail/FacilityDetail",
-                  params: { id: item.facilityId },
+                  params: { id: item.facilityId, ...sendParams },
                 });
               }}
             />

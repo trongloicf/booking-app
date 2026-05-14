@@ -5,24 +5,44 @@ import { router, useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function RoomDetail() {
-  const { id } = useLocalSearchParams();
-  const roomId = Number(id);
+  const rawParams = useLocalSearchParams();
+  const roomId = Number(rawParams.id);
+  const checkin = rawParams.checkin as string;
+  const checkout = rawParams.checkout as string;
   const { data: result } = useGetDetailRoom({
     roomId: roomId,
+    params: {
+      checkin: checkin,
+      checkout: checkout,
+    },
   });
-  console.log(result.room);
-  if (!result) return <Text>Không tìm thấy dữ liệu</Text>;
+  if (!roomId) return <Text>Mã phòng không hợp lệ</Text>;
+  if (!result) return <Text>Đang tải...</Text>;
 
   return (
     <View style={[commonStyles.container]}>
       <View style={{ flex: 1, backgroundColor: "white" }}>
-        <RoomDetailHeader room={result.room} />
+        <RoomDetailHeader
+          room={result.room}
+          amenities={result.amenities}
+          available={result.available}
+          reviews={result.reviews}
+          dateRange={{
+            checkin,
+            checkout,
+          }}
+        />
         <View style={styles.footerContainer}>
           <TouchableOpacity
             style={styles.bookingButton}
             onPress={() => {
               router.push({
                 pathname: "/booking/BookingScreen",
+                params: {
+                  room_id: result.room.roomId,
+                  checkin: rawParams?.checkin ?? "",
+                  checkout: rawParams?.checkout ?? "",
+                },
               });
             }}
           >

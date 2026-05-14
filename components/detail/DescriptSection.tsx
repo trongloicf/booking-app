@@ -2,11 +2,11 @@ import React, { useCallback, useState } from "react";
 import {
   NativeSyntheticEvent,
   StyleSheet,
-  Text,
   TextLayoutEventData,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Text } from "react-native-paper";
 
 export const DescriptionSection = ({
   text,
@@ -36,7 +36,8 @@ export const DescriptionSection = ({
       <Text style={stylesDesc.title}>{title}</Text>
       {!isMeasured && (
         <Text
-          style={[stylesDesc.description, stylesDesc.hiddenMeasurer]}
+          variant="bodySmall"
+          style={[stylesDesc.hiddenMeasurer]}
           onTextLayout={onTextLayout}
         >
           {text}
@@ -63,7 +64,7 @@ export const DescriptionSection = ({
 
 export const stylesDesc = StyleSheet.create({
   title: { fontSize: 16, fontWeight: "bold", marginBottom: 4 },
-  description: { fontSize: 14, color: "#444", lineHeight: 20 },
+  description: { fontSize: 14, color: "#444" },
   readMore: { color: "#2b4785", fontWeight: "bold" },
   hiddenMeasurer: {
     position: "absolute",

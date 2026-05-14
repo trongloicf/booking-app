@@ -1,5 +1,5 @@
 import { commonStyles } from "@/src/style/common";
-import { router, useRouter } from "expo-router";
+import { router } from "expo-router";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

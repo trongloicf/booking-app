@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useGetDetailFacility = (req: RequestDetail) => {
   return useQuery({
-    queryKey: ["get-detail-facility", req],
+    queryKey: ["get-detail-facility", req.facilityId, req.params],
     queryFn: () => facilityService.getFacilityDetail(req),
     enabled: !!req.facilityId,
   });
