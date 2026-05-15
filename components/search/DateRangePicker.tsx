@@ -14,6 +14,41 @@ export const DateRangePicker = ({
   onChange: (dateRange: DateRange) => void;
 }) => {
   const [visible, setVisible] = useState(false);
+  const today = new Date().toISOString().split("T")[0];
+  const getMarkedDates = () => {
+    const marked: any = {};
+    if (value.checkin) {
+      marked[value.checkin] = {
+        startingDay: true,
+        color: "#2b4785",
+        textColor: "white",
+      };
+    }
+    if (value.checkout) {
+      marked[value.checkout] = {
+        endingDay: true,
+        color: "#2b4785",
+        textColor: "white",
+      };
+
+      let start = new Date(value.checkin);
+      let end = new Date(value.checkout);
+      let curr = new Date(start);
+      curr.setDate(curr.getDate() + 1);
+
+      while (curr < end) {
+        const dateStr = curr.toISOString().split("T")[0];
+        marked[dateStr] = { color: "#e8edf6", textColor: "#2b4785" };
+        curr.setDate(curr.getDate() + 1);
+      }
+    }
+    return marked;
+  };
+
+  const handleSave = () => {
+    onChange(value);
+    setVisible(false);
+  };
   return (
     <>
       <TouchableOpacity onPress={() => setVisible(true)}>
@@ -54,18 +89,9 @@ export const DateRangePicker = ({
           </View>
 
           <Calendar
-            markedDates={{
-              [value.checkin]: {
-                selected: true,
-                disableTouchEvent: true,
-                selectedColor: "orange",
-              },
-              [value.checkout]: {
-                selected: true,
-                disableTouchEvent: true,
-                selectedColor: "orange",
-              },
-            }}
+            minDate={today}
+            markingType={"period"}
+            markedDates={getMarkedDates()}
             monthFormat={"MM/yyyy"}
             enableSwipeMonths
             hideExtraDays={false}
@@ -86,15 +112,27 @@ export const DateRangePicker = ({
                     ...value,
                     checkout: day.dateString,
                   });
-                  setVisible(false);
                 }
               }
             }}
           />
-
-          <Button onPress={() => onChange({ checkin: "", checkout: "" })}>
-            Đặt lại
-          </Button>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              marginTop: 20,
+            }}
+          >
+            <Button onPress={() => setVisible(false)}>Hủy</Button>
+            <Button
+              mode="contained"
+              disabled={!value.checkout}
+              onPress={handleSave}
+              style={{ marginLeft: 10, backgroundColor: "#2b4785" }}
+            >
+              Cập nhật
+            </Button>
+          </View>
         </Modal>
       </Portal>
     </>

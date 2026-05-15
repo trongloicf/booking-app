@@ -1,9 +1,9 @@
 import { Amenity } from "@/type/interfaces/amenity";
 import { ApiReponse } from "@/type/interfaces/base";
 import { DateRange } from "@/type/interfaces/params";
+import { ReviewForRoom } from "@/type/interfaces/review";
 import { RoomDetail, RoomDetailRequest } from "@/type/interfaces/room";
 import { instance } from "../instance";
-import { ReviewForRoom } from "@/type/interfaces/review";
 
 const rooms = "rooms";
 
@@ -19,6 +19,9 @@ export const roomService = {
   getRoomDetail: async (req: RoomDetailRequest): Promise<RoomDetailReponse> => {
     const res = await instance.get<ApiReponse<RoomDetailReponse>>(
       `/${rooms}/public/${req.roomId}`,
+      {
+        params: req.params,
+      },
     );
     return res.data.data;
   },

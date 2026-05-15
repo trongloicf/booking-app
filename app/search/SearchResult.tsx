@@ -1,20 +1,15 @@
 import { FacilityCard } from "@/components/card/card";
+import { useSearchParams } from "@/hooks/custom/useSearchParams";
 import { useGetFacilities } from "@/hooks/queries/useGetFacilities";
 import { commonStyles } from "@/src/style/common";
 import { trendingStyles } from "@/src/style/trending";
-import {
-  parseDetailParams,
-  parseSearchParams,
-} from "@/utils/parseSearchParams";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import { FlatList, View } from "react-native";
 
 export default function SearchResult() {
-  const params = useLocalSearchParams();
-  const parseParams = parseSearchParams(params);
-  const sendParams = parseDetailParams(params);
-  const { data } = useGetFacilities(parseParams);
-  console.log("params gửi API:", parseParams);
+  const { searchData } = useSearchParams();
+  const { data } = useGetFacilities(searchData);
+  console.log("params gửi API:", searchData);
   const facilities = data?.data;
   return (
     <View style={[commonStyles.container]}>
@@ -29,9 +24,10 @@ export default function SearchResult() {
             <FacilityCard
               item={item}
               onPress={() => {
+                const { keyword, city_id, ...rest } = searchData;
                 router.push({
                   pathname: "/detail/FacilityDetail",
-                  params: { id: item.facilityId, ...sendParams },
+                  params: { id: item.facilityId, ...rest },
                 });
               }}
             />

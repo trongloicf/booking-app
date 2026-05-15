@@ -1,20 +1,15 @@
 import { RoomDetailHeader } from "@/components/detail/RoomDetailHeader";
+import { useRoomDetailParams } from "@/hooks/custom/useRoomDetailParams";
 import { useGetDetailRoom } from "@/hooks/queries/useGetDetailRoom";
 import { commonStyles } from "@/src/style/common";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function RoomDetail() {
-  const rawParams = useLocalSearchParams();
-  const roomId = Number(rawParams.id);
-  const checkin = rawParams.checkin as string;
-  const checkout = rawParams.checkout as string;
+  const { roomId, roomDetailData } = useRoomDetailParams();
   const { data: result } = useGetDetailRoom({
     roomId: roomId,
-    params: {
-      checkin: checkin,
-      checkout: checkout,
-    },
+    params: roomDetailData,
   });
   if (!roomId) return <Text>Mã phòng không hợp lệ</Text>;
   if (!result) return <Text>Đang tải...</Text>;
@@ -28,8 +23,8 @@ export default function RoomDetail() {
           available={result.available}
           reviews={result.reviews}
           dateRange={{
-            checkin,
-            checkout,
+            checkin: roomDetailData.checkin,
+            checkout: roomDetailData.checkout,
           }}
         />
         <View style={styles.footerContainer}>
@@ -39,9 +34,8 @@ export default function RoomDetail() {
               router.push({
                 pathname: "/booking/BookingScreen",
                 params: {
-                  room_id: result.room.roomId,
-                  checkin: rawParams?.checkin ?? "",
-                  checkout: rawParams?.checkout ?? "",
+                  id: roomId,
+                  ...roomDetailData,
                 },
               });
             }}

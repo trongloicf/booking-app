@@ -5,7 +5,8 @@ import { useSearchForm } from "@/hooks/custom/useSearchForm";
 import { useGetFacilities } from "@/hooks/queries/useGetFacilities";
 import { commonStyles } from "@/src/style/common";
 import { trendingStyles } from "@/src/style/trending";
-import { SearchForm, SearchParams } from "@/type/interfaces/params";
+import { SearchForm } from "@/type/interfaces/params";
+import { getQueryParams } from "@/utils/getQueryParams";
 import { useRouter } from "expo-router";
 import { FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -30,20 +31,19 @@ export default function Home() {
   const facilities = data?.data || [];
   console.log("cơ sở", facilities);
   const handleSearch = (form: SearchForm) => {
-    const params: SearchParams = {
-      keyword: form.keyword,
-      city_id: form.city_id,
-      adults: form.quantityPerson.adults,
-      children: form.quantityPerson.children,
-      room: form.quantityPerson.room,
-      checkin: form.dateRange.checkin,
-      checkout: form.dateRange.checkout,
-    };
     router.push({
       pathname: "/search/SearchResult",
-      params: { ...params },
+      params: {
+        keyword: form.keyword,
+        city_id: form.city_id,
+        ...getQueryParams(form),
+      },
     });
-    console.log(params);
+    console.log("params", {
+      keyword: form.keyword,
+      city_id: form.city_id,
+      ...getQueryParams(form),
+    });
   };
   return (
     <View style={[commonStyles.container, { paddingTop: insets.top }]}>
@@ -70,6 +70,9 @@ export default function Home() {
                     id: item.facilityId,
                     checkin: form.dateRange.checkin,
                     checkout: form.dateRange.checkout,
+                    room: form.quantityPerson.room,
+                    adult: form.quantityPerson.adults,
+                    children: form.quantityPerson.children,
                   },
                 });
               }}

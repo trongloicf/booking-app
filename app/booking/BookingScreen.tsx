@@ -1,25 +1,31 @@
-import { useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { Button, Card, Text } from "react-native-paper";
 
 import { styles } from "@/components/card/CardHorizontal";
+import { DateRangeModal } from "@/components/card/DateRangeModal";
+import { useRoomDetailParams } from "@/hooks/custom/useRoomDetailParams";
 import { useGetDetailRoom } from "@/hooks/queries/useGetDetailRoom";
 import { commonStyles } from "@/src/style/common";
-import { formatVND } from "@/utils/format";
+import { DateRange } from "@/type/interfaces/params";
+import { formatDateVN, formatVND } from "@/utils/format";
+import { router } from "expo-router";
 
 export default function BookingScreen() {
-  const rawParams = useLocalSearchParams();
-  const roomId = Number(rawParams.room_id);
-  const checkin = rawParams.checkin as string;
-  const checkout = rawParams.checkout as string;
+  const { roomId, roomDetailData } = useRoomDetailParams();
   const { data: result, isLoading } = useGetDetailRoom({
     roomId: roomId,
-    params: {
-      checkin: checkin,
-      checkout: checkout,
-    },
+    params: roomDetailData,
   });
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleSaveDate = (newRange: DateRange) => {
+    router.setParams({
+      checkin: newRange.checkin,
+      checkout: newRange.checkout,
+    });
+    setOpenModal(false);
+  };
   const room = result?.room;
   if (!roomId)
     return <Text style={localStyles.centerText}>Mã phòng không hợp lệ</Text>;
@@ -60,7 +66,8 @@ export default function BookingScreen() {
             <View style={commonStyles.column}>
               <Text variant="titleMedium">Ngày nhận phòng - trả phòng</Text>
               <Text variant="titleSmall" style={localStyles.dateText}>
-                Tháng 5 Ngày 13-15, 2026
+                {formatDateVN(roomDetailData.checkin)} →{" "}
+                {formatDateVN(roomDetailData.checkout)}
               </Text>
             </View>
             <Card.Actions>
@@ -68,6 +75,7 @@ export default function BookingScreen() {
                 mode="contained"
                 style={commonStyles.bgPrimary}
                 labelStyle={commonStyles.textWhite}
+                onPress={() => setOpenModal(true)}
               >
                 Thay đổi
               </Button>
@@ -75,6 +83,15 @@ export default function BookingScreen() {
           </View>
         </View>
       </View>
+      <DateRangeModal
+        visible={openModal}
+        value={{
+          checkin: roomDetailData.checkin,
+          checkout: roomDetailData.checkout,
+        }}
+        onClose={() => setOpenModal(false)}
+        onSave={handleSaveDate}
+      />
     </Card>
   );
 }

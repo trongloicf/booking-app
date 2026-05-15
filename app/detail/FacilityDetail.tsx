@@ -4,7 +4,7 @@ import { PolicySection } from "@/components/detail/PolicySection";
 import { ReviewSection } from "@/components/detail/ReviewSection";
 import { useGetDetailFacility } from "@/hooks/queries/useGetDetailFacility";
 import { commonStyles } from "@/src/style/common";
-import { parseDateRangeParams } from "@/utils/parseSearchParams";
+import { parseDetailParams } from "@/utils/parseSearchParams";
 import { router, useLocalSearchParams } from "expo-router";
 import { FlatList, Text, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
@@ -12,7 +12,7 @@ import { ActivityIndicator } from "react-native-paper";
 export default function FacilityDetail() {
   const rawParams = useLocalSearchParams();
   const id = rawParams.id;
-  const parseParams = parseDateRangeParams(rawParams);
+  const parseParams = parseDetailParams(rawParams);
   const { data: result, isLoading: isLoadingDetailFacility } =
     useGetDetailFacility({
       facilityId: Number(id),
@@ -45,8 +45,7 @@ export default function FacilityDetail() {
                   pathname: "/detail/RoomDetail",
                   params: {
                     id: item.roomId,
-                    checkin: parseParams.checkin,
-                    checkout: parseParams.checkout,
+                    ...parseParams,
                   },
                 });
               }}
