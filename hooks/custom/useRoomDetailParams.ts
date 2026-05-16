@@ -5,7 +5,7 @@ export interface RoomDetailParams {
   checkout: string;
   adults: number;
   children: number;
-  room?: number;
+  room: number;
 }
 
 export interface UseRoomDetailParamsReturn {
@@ -22,6 +22,7 @@ export const useRoomDetailParams = () => {
       checkout: (params.checkout as string) || "",
       adults: Number(params.adults),
       children: Number(params.children),
+      room: Number(params.room),
     },
   };
 };
