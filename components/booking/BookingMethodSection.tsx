@@ -8,52 +8,50 @@ export const BookingMethodSection = () => {
   const [checked, setChecked] = useState<PaymentMethod>("CASH");
 
   return (
-    <Card style={styles.card}>
-      <Card.Content style={{ padding: 5 }}>
-        <Text variant="titleMedium" style={styles.title}>
-          Chọn phương thức thanh toán
-        </Text>
-        <TouchableOpacity
-          style={styles.row}
-          activeOpacity={0.7}
+    <Card.Content style={{ padding: 8 }}>
+      <Text variant="bodyMedium" style={styles.title}>
+        Chọn phương thức thanh toán
+      </Text>
+      <TouchableOpacity
+        style={styles.row}
+        activeOpacity={0.7}
+        onPress={() => setChecked("CASH")}
+      >
+        <View>
+          <Text variant="bodyLarge" style={styles.methodLabel}>
+            Thanh toán tại cơ sở
+          </Text>
+        </View>
+        <IconButton
+          icon={checked === "CASH" ? "radiobox-marked" : "radiobox-blank"}
+          size={20}
+          iconColor={checked === "CASH" ? "#000" : "#999"}
+          style={{ margin: 0 }}
           onPress={() => setChecked("CASH")}
-        >
-          <View>
-            <Text variant="bodyLarge" style={styles.methodLabel}>
-              Thanh toán tại cơ sở
-            </Text>
-          </View>
-          <IconButton
-            icon={checked === "CASH" ? "radiobox-marked" : "radiobox-blank"}
-            size={20}
-            iconColor={checked === "CASH" ? "#000" : "#999"}
-            style={{ margin: 0 }}
-            onPress={() => setChecked("CASH")}
-          />
-        </TouchableOpacity>
+        />
+      </TouchableOpacity>
 
-        <View style={styles.divider} />
+      <View style={styles.divider} />
 
-        <TouchableOpacity
-          style={styles.row}
-          activeOpacity={0.7}
+      <TouchableOpacity
+        style={styles.row}
+        activeOpacity={0.7}
+        onPress={() => setChecked("MOMO")}
+      >
+        <View>
+          <Text variant="bodyLarge" style={styles.methodLabel}>
+            Thanh toán bằng ví điện tử MoMo
+          </Text>
+        </View>
+        <IconButton
+          icon={checked === "MOMO" ? "radiobox-marked" : "radiobox-blank"}
+          size={20}
+          iconColor={checked === "MOMO" ? "#000" : "#ccc"}
+          style={{ margin: 0 }}
           onPress={() => setChecked("MOMO")}
-        >
-          <View>
-            <Text variant="bodyLarge" style={styles.methodLabel}>
-              Thanh toán bằng ví điện tử MoMo
-            </Text>
-          </View>
-          <IconButton
-            icon={checked === "MOMO" ? "radiobox-marked" : "radiobox-blank"}
-            size={20}
-            iconColor={checked === "MOMO" ? "#000" : "#ccc"}
-            style={{ margin: 0 }}
-            onPress={() => setChecked("MOMO")}
-          />
-        </TouchableOpacity>
-      </Card.Content>
-    </Card>
+        />
+      </TouchableOpacity>
+    </Card.Content>
   );
 };
 

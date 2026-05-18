@@ -1,7 +1,13 @@
-import React, { useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Card, Text } from "react-native-paper";
 
+import { BookingContactSection } from "@/components/booking/BookingContactSection";
 import { BookingDateSection } from "@/components/booking/BookingDateSection";
 import {
   BookingGuestValue,
@@ -12,6 +18,7 @@ import { BookingMethodSection } from "@/components/booking/BookingMethodSection"
 import { BookingRoomSection } from "@/components/booking/BookingRoomSection";
 import { styles } from "@/components/card/CardHorizontal";
 import { DateRangeModal } from "@/components/card/DateRangeModal";
+import { useAuthUser } from "@/hooks/custom/useAuthUser";
 import { useRoomDetailParams } from "@/hooks/custom/useRoomDetailParams";
 import { useGetDetailRoom } from "@/hooks/queries/useGetDetailRoom";
 import { commonStyles } from "@/src/style/common";
@@ -19,6 +26,7 @@ import { DateRange } from "@/type/interfaces/params";
 import { calculateNights } from "@/utils/calculateNights";
 import { formatVND } from "@/utils/format";
 import { router } from "expo-router";
+import { roomDetailStyles } from "../detail/RoomDetail";
 
 export default function BookingScreen() {
   const { roomId, roomDetailData } = useRoomDetailParams();
@@ -28,6 +36,20 @@ export default function BookingScreen() {
   });
   const [openModal, setOpenModal] = useState(false);
   const [openRoomGuestModal, setOpenRoomGuestModal] = useState(false);
+  const { user } = useAuthUser();
+  const [contactInfo, setContactInfo] = useState({
+    name: user?.user_name ?? "",
+    phone: "",
+  });
+
+  useEffect(() => {
+    if (user) {
+      setContactInfo((prev) => ({
+        ...prev,
+        name: user.user_name ?? "",
+      }));
+    }
+  }, [user]);
 
   const handleSaveDate = (newRange: DateRange) => {
     router.setParams({
@@ -121,7 +143,24 @@ export default function BookingScreen() {
           onSave={handleSaveDate}
         />
       </Card>
+      <BookingContactSection value={contactInfo} onChange={setContactInfo} />
       <BookingMethodSection />
+      <View style={roomDetailStyles.footerContainer}>
+        <TouchableOpacity
+          style={roomDetailStyles.bookingButton}
+          onPress={() => {
+            router.push({
+              pathname: "/booking/BookingScreen",
+              params: {
+                id: roomId,
+                ...roomDetailData,
+              },
+            });
+          }}
+        >
+          <Text style={roomDetailStyles.buttonText}>Đặt ngay</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

@@ -13,9 +13,9 @@ export const storage = {
 
   getToken: () => AsyncStorage.getItem(TOKEN_USER),
 
-  getUser: async () => {
+  getUser: async (): Promise<User | null> => {
     const user = await AsyncStorage.getItem(USER_INFO);
-    return user ? JSON.parse(user) : null;
+    return user ? (JSON.parse(user) as User) : null;
   },
 
   clear: async () => {

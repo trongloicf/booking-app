@@ -27,9 +27,9 @@ export default function RoomDetail() {
             checkout: roomDetailData.checkout,
           }}
         />
-        <View style={styles.footerContainer}>
+        <View style={roomDetailStyles.footerContainer}>
           <TouchableOpacity
-            style={styles.bookingButton}
+            style={roomDetailStyles.bookingButton}
             onPress={() => {
               router.push({
                 pathname: "/booking/BookingScreen",
@@ -40,7 +40,7 @@ export default function RoomDetail() {
               });
             }}
           >
-            <Text style={styles.buttonText}>Đặt ngay</Text>
+            <Text style={roomDetailStyles.buttonText}>Đặt ngay</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -48,7 +48,7 @@ export default function RoomDetail() {
   );
 }
 
-const styles = StyleSheet.create({
+export const roomDetailStyles = StyleSheet.create({
   footerContainer: {
     position: "absolute",
     bottom: 0,
