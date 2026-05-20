@@ -20,6 +20,7 @@ import { styles } from "@/components/card/CardHorizontal";
 import { DateRangeModal } from "@/components/card/DateRangeModal";
 import { useAuthUser } from "@/hooks/custom/useAuthUser";
 import { useRoomDetailParams } from "@/hooks/custom/useRoomDetailParams";
+import { usePostBooking } from "@/hooks/mutations/post/usePostBooking";
 import { useGetDetailRoom } from "@/hooks/queries/useGetDetailRoom";
 import { commonStyles } from "@/src/style/common";
 import { DateRange } from "@/type/interfaces/params";
@@ -34,6 +35,7 @@ export default function BookingScreen() {
     roomId: roomId,
     params: roomDetailData,
   });
+  const { mutate, isPending: isBooking } = usePostBooking();
   const [openModal, setOpenModal] = useState(false);
   const [openRoomGuestModal, setOpenRoomGuestModal] = useState(false);
   const { user } = useAuthUser();
@@ -65,6 +67,25 @@ export default function BookingScreen() {
       children: newGuest.children,
     });
     setOpenRoomGuestModal(false);
+  };
+
+  const handleBooking = () => {
+    mutate({
+      customerId: user ? user.user_id : 1,
+      contactName: user ? user.user_name : contactInfo.name,
+      contactPhone: contactInfo.phone,
+      checkin: roomDetailData.checkin,
+      checkout: roomDetailData.checkout,
+      paymentMethod: "CASH",
+      note: "",
+      room: {
+        roomId: roomId,
+        adults: roomDetailData.adults,
+        children: roomDetailData.children,
+        quantity: roomDetailData.room,
+        pricePerNight: totalPrice,
+      },
+    });
   };
 
   const room = result?.room;
@@ -158,7 +179,9 @@ export default function BookingScreen() {
             });
           }}
         >
-          <Text style={roomDetailStyles.buttonText}>Đặt ngay</Text>
+          <Text style={roomDetailStyles.buttonText} onPress={handleBooking}>
+            Đặt ngay
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
