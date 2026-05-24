@@ -34,8 +34,20 @@ export default function RoomDetail() {
               router.push({
                 pathname: "/booking/BookingScreen",
                 params: {
-                  id: roomId,
                   ...roomDetailData,
+                  rooms: JSON.stringify([
+                    {
+                      roomId: result.room.roomId,
+                      roomName: result.room.roomName,
+                      quantity: 1,
+                      roomThumbnail: result.room.roomThumbnail,
+                      price: result.room.price,
+                      maxAdults: result.room.maxAdults,
+                      maxChildren: result.room.maxChildren,
+                      facilityName: result.room.facilityName,
+                      facilityAddress: result.room.facilityAddress,
+                    },
+                  ]),
                 },
               });
             }}
@@ -54,7 +66,7 @@ export const roomDetailStyles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    padding: 16,
+    padding: 15,
     backgroundColor: "white",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -3 },

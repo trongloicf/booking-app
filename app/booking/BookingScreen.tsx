@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { Card, Text } from "react-native-paper";
 
@@ -21,7 +21,6 @@ import { DateRangeModal } from "@/components/card/DateRangeModal";
 import { useAuthUser } from "@/hooks/custom/useAuthUser";
 import { useRoomDetailParams } from "@/hooks/custom/useRoomDetailParams";
 import { usePostBooking } from "@/hooks/mutations/post/usePostBooking";
-import { useGetDetailRoom } from "@/hooks/queries/useGetDetailRoom";
 import { commonStyles } from "@/src/style/common";
 import { DateRange } from "@/type/interfaces/params";
 import { calculateNights } from "@/utils/calculateNights";
@@ -30,11 +29,8 @@ import { router } from "expo-router";
 import { roomDetailStyles } from "../detail/RoomDetail";
 
 export default function BookingScreen() {
-  const { roomId, roomDetailData } = useRoomDetailParams();
-  const { data: result, isLoading } = useGetDetailRoom({
-    roomId: roomId,
-    params: roomDetailData,
-  });
+  const { roomId, roomDetailData, rooms } = useRoomDetailParams();
+  console.log("rooms: ", rooms);
   const { mutate, isPending: isBooking } = usePostBooking();
   const [openModal, setOpenModal] = useState(false);
   const [openRoomGuestModal, setOpenRoomGuestModal] = useState(false);
@@ -53,6 +49,29 @@ export default function BookingScreen() {
     }
   }, [user]);
 
+  const constraints = useMemo(() => {
+    const totalMaxAdults = rooms.reduce(
+      (sum, r) => sum + r.maxAdults * r.quantity,
+      0,
+    );
+
+    const totalMaxChildren = rooms.reduce(
+      (sum, r) => sum + r.maxChildren * r.quantity,
+      0,
+    );
+
+    const totalMaxPeople = rooms.reduce(
+      (sum, r) => sum + (r.maxAdults + r.maxChildren) * r.quantity,
+      0,
+    );
+
+    return {
+      maxAdults: totalMaxAdults,
+      maxChildren: totalMaxChildren,
+      maxOccupancy: totalMaxPeople,
+    };
+  }, [rooms]);
+
   const handleSaveDate = (newRange: DateRange) => {
     router.setParams({
       checkin: newRange.checkin,
@@ -70,29 +89,36 @@ export default function BookingScreen() {
   };
 
   const handleBooking = () => {
-    mutate({
-      customerId: user ? user.user_id : 1,
-      contactName: user ? user.user_name : contactInfo.name,
-      contactPhone: contactInfo.phone,
-      checkin: roomDetailData.checkin,
-      checkout: roomDetailData.checkout,
-      paymentMethod: "CASH",
-      note: "",
-      room: {
-        roomId: roomId,
+    if (isBooking || !rooms.length) return;
+    mutate(
+      {
+        customerId: user ? user.user_id : 1,
+        contactName: contactInfo.name,
+        contactPhone: contactInfo.phone,
+        checkin: roomDetailData.checkin,
+        checkout: roomDetailData.checkout,
+        paymentMethod: "CASH",
         adults: roomDetailData.adults,
         children: roomDetailData.children,
-        quantity: roomDetailData.room,
-        pricePerNight: totalPrice,
+        note: "",
+        rooms: rooms.map((r) => ({
+          roomId: r.roomId,
+          quantity: r.quantity,
+          // adults: Math.ceil(roomDetailData.adults / rooms.length),
+          // children: Math.ceil(roomDetailData.children / rooms.length),
+        })),
       },
-    });
+      {
+        onSuccess: () =>
+          setTimeout(() => {
+            router.push({
+              pathname: "/Booking",
+            });
+          }, 300),
+      },
+    );
   };
-
-  const room = result?.room;
-  if (!roomId)
-    return <Text style={bookingStyles.centerText}>Mã phòng không hợp lệ</Text>;
-  if (isLoading) return <ActivityIndicator style={bookingStyles.loader} />;
-  if (!room)
+  if (!rooms.length)
     return (
       <Text style={bookingStyles.centerText}>
         Không tìm thấy thông tin phòng
@@ -102,13 +128,15 @@ export default function BookingScreen() {
     roomDetailData.checkin,
     roomDetailData.checkout,
   );
-  const totalPrice = nights * Number(room.price);
+  const totalPrice = rooms.reduce((sum, r) => {
+    return sum + Number(r.price) * r.quantity * nights;
+  }, 0);
 
   return (
     <View style={[commonStyles.flex1, commonStyles.bgWhite]}>
       <Card style={styles.card}>
         <View style={[styles.containerInner, commonStyles.column]}>
-          <BookingRoomSection room={room} roomQuantity={roomDetailData.room} />
+          <BookingRoomSection rooms={rooms} />
           <View style={bookingStyles.dateSection}>
             <BookingDateSection
               nights={nights}
@@ -125,7 +153,7 @@ export default function BookingScreen() {
               <View style={commonStyles.column}>
                 <Text variant="bodyMedium">Chi tiết giá cả</Text>
                 <Text variant="bodySmall" style={bookingStyles.dateText}>
-                  {nights} đêm x {formatVND(Number(room.price))}
+                  {nights} đêm x {formatVND(Number(totalPrice))}
                 </Text>
               </View>
               <Text variant="bodyMedium">{formatVND(totalPrice)}</Text>
@@ -146,11 +174,7 @@ export default function BookingScreen() {
             adults: roomDetailData.adults,
             children: roomDetailData.children,
           }}
-          constraints={{
-            maxAdults: room.maxAdults,
-            maxChildren: room.maxChildren,
-            maxOccupancy: room.maxOccupancy,
-          }}
+          constraints={constraints}
           onClose={() => setOpenRoomGuestModal(false)}
           onSave={handleSaveGuest}
         />
@@ -169,19 +193,14 @@ export default function BookingScreen() {
       <View style={roomDetailStyles.footerContainer}>
         <TouchableOpacity
           style={roomDetailStyles.bookingButton}
-          onPress={() => {
-            router.push({
-              pathname: "/booking/BookingScreen",
-              params: {
-                id: roomId,
-                ...roomDetailData,
-              },
-            });
-          }}
+          onPress={handleBooking}
+          disabled={isBooking}
         >
-          <Text style={roomDetailStyles.buttonText} onPress={handleBooking}>
-            Đặt ngay
-          </Text>
+          {isBooking ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={roomDetailStyles.buttonText}>Đặt ngay</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>

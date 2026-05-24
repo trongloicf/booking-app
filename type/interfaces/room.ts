@@ -23,6 +23,8 @@ export interface RoomFacility {
   roomName: string;
   roomThumbnail: string;
   roomTypeName: string;
+  facilityName: string;
+  facilityAddress: string;
 }
 
 export interface RoomDetail {

@@ -1,3 +1,4 @@
+import { SelectedRoom } from "@/app/detail/FacilityDetail";
 import { useLocalSearchParams } from "expo-router";
 
 export interface RoomDetailParams {
@@ -11,10 +12,18 @@ export interface RoomDetailParams {
 export interface UseRoomDetailParamsReturn {
   roomId: number;
   roomDetailData: RoomDetailParams;
+  rooms: SelectedRoom[];
 }
 
 export const useRoomDetailParams = () => {
   const params = useLocalSearchParams();
+  let rooms: SelectedRoom[] = [];
+
+  try {
+    rooms = params.rooms ? JSON.parse(params.rooms as string) : [];
+  } catch (e) {
+    console.warn("Parse rooms error:", e);
+  }
   return {
     roomId: Number(params.id),
     roomDetailData: {
@@ -24,5 +33,6 @@ export const useRoomDetailParams = () => {
       children: Number(params.children),
       room: Number(params.room),
     },
+    rooms,
   };
 };
