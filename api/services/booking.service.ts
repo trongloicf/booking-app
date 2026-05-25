@@ -1,4 +1,5 @@
 import { ApiReponse } from "@/type/interfaces/base";
+import { ParamsGetBooking } from "@/type/interfaces/booking";
 import { AxiosError, isAxiosError } from "axios";
 import { instance } from "../instance";
 
@@ -67,5 +68,24 @@ export const bookingService = {
       throw new Error("Đã có lỗi hệ thống xảy ra");
     }
   },
-  // getDetailBooking: async (bookingId: number): Promise<Item>
+  getAllBooking: async ({ page, limit, status }: ParamsGetBooking) => {
+    const res = await instance.get(`/bookings`, {
+      params: { page, limit, status },
+    });
+
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Lấy lịch sử booking thất bại");
+    }
+
+    return res.data;
+  },
+  getDetailBooking: async (bookingId: number) => {
+    const res = await instance.get(`bookings/${bookingId}`);
+    if (!res.data.success) {
+      throw new Error(
+        res.data.message || "Lấy chi tiết đơn đặt phòng thất bại",
+      );
+    }
+    return res.data;
+  },
 };

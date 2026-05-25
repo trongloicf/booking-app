@@ -46,6 +46,13 @@ export default function RootLayout() {
             }}
           />
           <Stack.Screen
+            name="booking/BookingDetail"
+            options={{
+              title: "Chi tiết đặt phòng",
+              headerLeft: () => <BackIconStack />,
+            }}
+          />
+          <Stack.Screen
             name="(auth)/Login"
             options={{
               headerLeft: () => <BackIconStack />,
