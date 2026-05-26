@@ -6,7 +6,7 @@ export const useInfiniteBooking = (
   options?: { enabled?: boolean },
 ) => {
   return useInfiniteQuery({
-    queryKey: ["bookings", status],
+    queryKey: ["get-all-booking", status],
     queryFn: ({ pageParam = 1 }) =>
       bookingService.getAllBooking({
         page: pageParam,

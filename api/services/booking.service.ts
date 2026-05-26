@@ -88,4 +88,19 @@ export const bookingService = {
     }
     return res.data;
   },
+  cancelBooking: async (bookingId: number) => {
+    try {
+      const res = await instance.put(`bookings/${bookingId}/cancel`);
+      return res.data;
+    } catch (error) {
+      if (isAxiosError(error) && error.response) {
+        const serverMessage =
+          error.response.data?.message ||
+          "Server gặp sự cố không thể hủy phòng";
+        throw new Error(serverMessage);
+      }
+
+      throw new Error("Không thể kết nối đến máy chủ");
+    }
+  },
 };
