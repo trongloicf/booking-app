@@ -50,7 +50,7 @@ export default function Booking() {
     <View style={commonStyles.container}>
       <View style={[commonStyles.extendScreen, { flex: 1 }]}>
         <View style={[commonStyles.column, commonStyles.gap5, { flex: 1 }]}>
-          <Text variant="titleLarge">Tất cả cơ sở</Text>
+          <Text variant="titleLarge">Tất cả đơn đặt phòng</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}

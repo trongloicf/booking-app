@@ -73,6 +73,13 @@ export default function RootLayout() {
               headerLeft: () => <BackIconStack />,
             }}
           />
+          <Stack.Screen
+            name="subScreen/RegisterHost"
+            options={{
+              title: "Đăng ký làm chủ cơ sở",
+              headerLeft: () => <BackIconStack />,
+            }}
+          />
         </Stack>
         <StatusBar style="auto" />
       </PaperProvider>

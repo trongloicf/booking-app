@@ -16,7 +16,7 @@ export const CityPicker = ({
   const cityMap = useMemo(() => {
     const map: Record<number, string> = {};
     cities.forEach((c) => {
-      map[c.cityId] = c.cityName;
+      map[c.city_id] = c.city_name;
     });
     return map;
   }, [cities]);
@@ -42,9 +42,9 @@ export const CityPicker = ({
         {cities.map((item, index) => (
           <Menu.Item
             key={index}
-            title={item.cityName}
+            title={item.city_name}
             onPress={() => {
-              onChange(item.cityId);
+              onChange(item.city_id);
               setVisible(false);
             }}
           />

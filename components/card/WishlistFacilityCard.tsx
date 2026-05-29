@@ -1,17 +1,17 @@
+import { Wishlist } from "@/api/services/wishlist.service";
 import { commonStyles } from "@/src/style/common";
-import { FacilityCardItem } from "@/type/interfaces/facility";
 import { StyleSheet, View } from "react-native";
 import { Card, Icon, IconButton, Text } from "react-native-paper";
 
-export const FacilityHorizontalCard = ({
+export const WishlistFacilityCard = ({
   item,
   onPress,
 }: {
-  item: FacilityCardItem;
+  item: Wishlist;
   onPress?: () => void;
 }) => {
   return (
-    <Card style={[styles.card]} onPress={onPress}>
+    <Card style={styles.card} onPress={onPress}>
       <View style={styles.containerInner}>
         <View style={styles.row}>
           <View style={styles.imageContainer}>
@@ -22,20 +22,22 @@ export const FacilityHorizontalCard = ({
             <IconButton
               icon="heart"
               size={18}
-              containerColor="rgba(255, 255, 255, 0.5)"
+              containerColor={
+                item.isWishlisted ? "rgba(255, 255, 255, 0.5)" : "transparent"
+              }
               style={styles.wishlistBtn}
               onPress={() => console.log("Not liked")}
             />
           </View>
 
-          <View style={styles.content}>
+          <View style={[styles.content, { justifyContent: "flex-start" }]}>
             <Card.Content style={styles.cardContent}>
               <View style={commonStyles.column}>
                 <Text style={styles.name}>{item.facilityName}</Text>
                 <View style={styles.infoRow}>
                   <Icon source="star" color="#FFC107" size={14} />
                   <Text variant="bodySmall" numberOfLines={1}>
-                    {item.avgRating} ({item.totalReviews})
+                    {item.avgRating} ({item.totalReviews} đánh giá)
                   </Text>
                 </View>
                 <View style={styles.infoRow}>

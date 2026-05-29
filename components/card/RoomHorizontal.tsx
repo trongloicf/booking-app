@@ -30,7 +30,7 @@ export const RoomHorizontal = ({
               />
             </View>
 
-            <View style={styles.content}>
+            <View style={[styles.content]}>
               <Card.Content style={styles.cardContent}>
                 <Text variant="bodyLarge" style={styles.name}>
                   {item.roomName}
@@ -44,6 +44,16 @@ export const RoomHorizontal = ({
                         , {item.maxChildren} trẻ em
                       </Text>
                     )}
+                  </Text>
+                </View>
+                <View style={[styles.infoRow]}>
+                  <Icon source="bed-empty" size={16} />
+                  <Text variant="bodyMedium" numberOfLines={1}>
+                    {item.bedName}
+                  </Text>
+                  <Icon source="home-switch" size={16} />
+                  <Text variant="bodyMedium" numberOfLines={1}>
+                    {item.roomArea} m²
                   </Text>
                 </View>
                 <View>
