@@ -7,6 +7,7 @@ export const usePostWishlist = () => {
   return useMutation({
     mutationFn: wishlistService.toggleWishlist,
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["facilities"] });
       queryClient.invalidateQueries({ queryKey: ["get-all-wishlist"] });
       if (data.isWishlisted) {
         showSuccess("Đã thêm vào danh sách yêu thích");

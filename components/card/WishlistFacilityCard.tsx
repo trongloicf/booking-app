@@ -6,9 +6,11 @@ import { Card, Icon, IconButton, Text } from "react-native-paper";
 export const WishlistFacilityCard = ({
   item,
   onPress,
+  onToggleWishlist,
 }: {
   item: Wishlist;
   onPress?: () => void;
+  onToggleWishlist?: () => void;
 }) => {
   return (
     <Card style={styles.card} onPress={onPress}>
@@ -26,7 +28,7 @@ export const WishlistFacilityCard = ({
                 item.isWishlisted ? "rgba(255, 255, 255, 0.5)" : "transparent"
               }
               style={styles.wishlistBtn}
-              onPress={() => console.log("Not liked")}
+              onPress={onToggleWishlist}
             />
           </View>
 

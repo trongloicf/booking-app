@@ -1,4 +1,5 @@
 import { RoomDetailHeader } from "@/components/detail/RoomDetailHeader";
+import { Loading } from "@/components/loading/Loading";
 import { useRoomDetailParams } from "@/hooks/custom/useRoomDetailParams";
 import { useGetDetailRoom } from "@/hooks/queries/useGetDetailRoom";
 import { commonStyles } from "@/src/style/common";
@@ -7,12 +8,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function RoomDetail() {
   const { roomId, roomDetailData } = useRoomDetailParams();
-  const { data: result } = useGetDetailRoom({
+  const { data: result, isLoading } = useGetDetailRoom({
     roomId: roomId,
     params: roomDetailData,
   });
   if (!roomId) return <Text>Mã phòng không hợp lệ</Text>;
-  if (!result) return <Text>Đang tải...</Text>;
+  if (!result) return <Text>Không tìm thấy thông tin phòng</Text>;
+  if (isLoading) return <Loading />;
 
   return (
     <View style={[commonStyles.container]}>
@@ -21,7 +23,6 @@ export default function RoomDetail() {
           room={result.room}
           amenities={result.amenities}
           available={result.available}
-          reviews={result.reviews}
           dateRange={{
             checkin: roomDetailData.checkin,
             checkout: roomDetailData.checkout,

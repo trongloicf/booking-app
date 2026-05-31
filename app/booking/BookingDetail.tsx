@@ -1,6 +1,12 @@
-import { BOOKING_STATUS } from "@/api/constant/status";
+import {
+  BOOKING_STATUS,
+  PAYMENT_METHOD,
+  PAYMENT_STATUS,
+} from "@/api/constant/status";
+import { ReviewModal } from "@/components/booking/ReviewModal";
 import { BookingDetailHorizontal } from "@/components/card/BookingDetailHorizontal";
 import { Loading } from "@/components/loading/Loading";
+import { usePostReview } from "@/hooks/mutations/post/usePostReview";
 import { usePutCancelBooking } from "@/hooks/mutations/put/usePutCancelBooking";
 import { useGetDetailBooking } from "@/hooks/queries/useGetDetailBooking";
 import { commonStyles } from "@/src/style/common";
@@ -9,15 +15,19 @@ import { formatDateVN, formatVND } from "@/utils/format";
 import { getStatusInfo } from "@/utils/renderStatusEngtoVN";
 import { showSuccess } from "@/utils/toast";
 import { useLocalSearchParams } from "expo-router";
+import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 export default function BookingDetail() {
   const { bookingId } = useLocalSearchParams();
   const numericBookingId = Number(bookingId);
+  const [modalVisible, setModalVisible] = useState(false);
   const { data, isLoading, error } = useGetDetailBooking(numericBookingId);
   const { mutate: cancelBooking, isPending: isCanceling } =
     usePutCancelBooking();
+  const { mutate: submitReview, isPending: isSubmittingReview } =
+    usePostReview();
   if (isLoading) return <Loading />;
 
   if (error || !numericBookingId) {
@@ -30,6 +40,8 @@ export default function BookingDetail() {
   if (!data) return null;
   const booking = data.data.booking;
   const bookingDetail = data.data.details;
+  const payment = data.data.payment;
+  const isReviewed = data.data.isReviewed;
   const status = getStatusInfo(booking.status);
   const now = new Date();
   const checkinDate = new Date(booking.checkinDate);
@@ -89,7 +101,16 @@ export default function BookingDetail() {
         </View>
       </View>
       <View style={{ marginBottom: 8 }}>
-        <Text>Thanh toán: Trả tại khách sạn</Text>
+        <Text>
+          Thanh toán:{" "}
+          {payment.method === PAYMENT_METHOD.CASH
+            ? "Trả tại khách sạn"
+            : "Thanh toán online"}{" "}
+          -{" "}
+          {payment.status === PAYMENT_STATUS.PAID
+            ? "Đã thanh toán"
+            : "Chưa thanh toán"}
+        </Text>
         <Text variant="titleMedium">
           Tổng tiền:{" "}
           <Text style={{ fontWeight: "bold" }}>
@@ -140,6 +161,34 @@ export default function BookingDetail() {
               {canCancel ? "Hủy đơn" : ""}
             </Text>
           </Button>
+        )}
+        {booking.status === BOOKING_STATUS.CHECKED_OUT && (
+          <>
+            <Button
+              mode={isReviewed ? "text" : "contained"}
+              disabled={isReviewed ? true : false}
+              style={isReviewed ? [] : [commonStyles.bgPrimary]}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text style={[{ color: isReviewed ? "#333" : "#fff" }]}>
+                {isReviewed ? "Đã đánh giá" : "Đánh giá"}
+              </Text>
+            </Button>
+            {modalVisible && (
+              <ReviewModal
+                visible={modalVisible}
+                isSubmitting={isSubmittingReview}
+                onClose={() => setModalVisible(false)}
+                onSubmit={({ rating, comment }) => {
+                  submitReview({
+                    bookingId: numericBookingId,
+                    rating,
+                    comment,
+                  });
+                }}
+              />
+            )}
+          </>
         )}
       </View>
     </ScrollView>

@@ -4,8 +4,8 @@ export interface ReviewForFacility {
   comment: string;
   createdAt: string;
   userName: string;
-  roomName: string;
-  roomTypeName: string;
+  facilityId: number;
+  facilityName: string;
   reviewRank: number;
   totalUserReviews: number;
 }

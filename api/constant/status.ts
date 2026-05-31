@@ -5,3 +5,13 @@ export const BOOKING_STATUS = {
   CHECKED_OUT: "CHECKED_OUT",
   CANCELLED: "CANCELLED",
 } as const;
+
+export const PAYMENT_METHOD = {
+  CASH: "CASH",
+  ONLINE: "ONLINE",
+} as const;
+
+export const PAYMENT_STATUS = {
+  PAID: "PAID",
+  UNPAID: "UNPAID",
+} as const;

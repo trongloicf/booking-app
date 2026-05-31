@@ -13,7 +13,7 @@ export const ReviewSection = ({ reviews }: ReviewSectionProps) => {
       </View>
     );
 
-  const displayReviews = reviews.slice(0, 2);
+  // const displayReviews = reviews.slice(0, 2);
 
   return (
     <View style={styles.sectionContainer}>
@@ -21,7 +21,7 @@ export const ReviewSection = ({ reviews }: ReviewSectionProps) => {
         Đánh giá khách hàng ({reviews.length})
       </Text>
 
-      {displayReviews.map((item) => (
+      {reviews.map((item) => (
         <View key={item.reviewId} style={styles.reviewCard}>
           <View style={styles.reviewHeader}>
             <View style={styles.userInfo}>

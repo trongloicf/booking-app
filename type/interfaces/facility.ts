@@ -14,6 +14,7 @@ export interface FacilityCardItem {
   description?: string;
   facilityAmenity?: number[];
   rooms: number[];
+  totalWishlist?: number;
 }
 
 export interface FacilityDetail {

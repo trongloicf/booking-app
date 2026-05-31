@@ -1,5 +1,6 @@
 import { NoLogin } from "@/components/auth/NoLogin";
 import { BookingHorizontal } from "@/components/card/BookingHorizontal";
+import { Loading } from "@/components/loading/Loading";
 import { useAuthUser } from "@/hooks/custom/useAuthUser";
 import { useInfiniteBooking } from "@/hooks/queries/useGetAllBooking";
 import { commonStyles } from "@/src/style/common";
@@ -22,10 +23,15 @@ export default function Booking() {
   const insets = useSafeAreaInsets();
   const { user, isAuthenticated } = useAuthUser();
   const [status, setStatus] = useState<string>("");
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteBooking(status, {
-      enabled: isAuthenticated,
-    });
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: isBookingLoading,
+  } = useInfiniteBooking(status, {
+    enabled: isAuthenticated,
+  });
 
   const bookingList = data?.pages.flatMap((p) => p.data) || [];
   console.log(bookingList);
@@ -33,6 +39,10 @@ export default function Booking() {
     return (
       <NoLogin title="Vui lòng đăng nhập để xem danh sách đơn đặt phòng của bạn" />
     );
+
+  if (isBookingLoading) {
+    return <Loading />;
+  }
   return (
     <View style={[commonStyles.container, { paddingTop: insets.top }]}>
       <View style={[commonStyles.extendScreen, { flex: 1 }]}>

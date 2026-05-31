@@ -1,43 +1,43 @@
 import { commonStyles } from "@/src/style/common";
 import { Amenity } from "@/type/interfaces/amenity";
 import { DateRange } from "@/type/interfaces/params";
-import { ReviewForRoom } from "@/type/interfaces/review";
 import { RoomDetail } from "@/type/interfaces/room";
 import { formatVND } from "@/utils/format";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { Icon, Text } from "react-native-paper";
 import { AmenityRadius } from "../card/AmenityRadius";
 import { DescriptionSection } from "./DescriptSection";
-import { ReviewSection } from "./ReviewSection";
 import { SubDesc } from "./SubDesc";
 
 export const RoomDetailHeader = ({
   room,
   amenities,
   available,
-  reviews,
   dateRange,
 }: {
   room: RoomDetail;
   amenities: Amenity[];
   available?: number;
-  reviews?: ReviewForRoom[];
   dateRange?: DateRange;
 }) => {
   return (
     <ScrollView style={{ position: "relative" }}>
+      <Image
+        source={{ uri: room.roomThumbnail }}
+        style={{
+          width: "100%",
+          height: 220,
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+        }}
+      />
       <View style={{ paddingHorizontal: 10, paddingVertical: 10 }}>
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>
           {room.roomName}
         </Text>
-        <Text variant="bodySmall">
-          {room.facilityName} - {room.facilityAddress}
-        </Text>
+        <Text variant="bodySmall">{room.facilityName}</Text>
+        <Text variant="bodySmall">{room.facilityAddress}</Text>
       </View>
-      <Image
-        source={{ uri: room.roomThumbnail }}
-        style={{ width: "100%", height: 250 }}
-      />
       {/* {room.images && (
             <FlatList
             horizontal
@@ -56,9 +56,19 @@ export const RoomDetailHeader = ({
             )}
             />
         )} */}
-      <AmenityRadius amenities={amenities || []} />
       <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
         <View style={[commonStyles.column, { gap: 5 }]}>
+          <View style={[commonStyles.row, { alignItems: "center", gap: 5 }]}>
+            <Text>Giá cho 1 đêm</Text>
+            <Text
+              style={[
+                commonStyles.priceColor,
+                { fontSize: 20, fontWeight: "bold" },
+              ]}
+            >
+              {formatVND(Number(room.price))}
+            </Text>
+          </View>
           <View style={[commonStyles.row, { alignItems: "center", gap: 5 }]}>
             <Icon source="account" size={16} />
             <Text variant="bodyMedium" numberOfLines={1}>
@@ -76,19 +86,9 @@ export const RoomDetailHeader = ({
               {room.roomArea} m²
             </Text>
           </View>
-          <View style={[commonStyles.row, { alignItems: "center", gap: 5 }]}>
-            <Text>Giá cho 1 đêm</Text>
-            <Text
-              style={[
-                commonStyles.priceColor,
-                { fontSize: 18, fontWeight: "bold" },
-              ]}
-            >
-              {formatVND(Number(room.price))}
-            </Text>
-          </View>
         </View>
       </View>
+      <AmenityRadius amenities={amenities || []} />
       <View style={[roomDetailStyles.spaceBlock, roomDetailStyles.p10]}>
         <DescriptionSection
           title="Mô tả phòng"
@@ -96,7 +96,6 @@ export const RoomDetailHeader = ({
         />
         <SubDesc title="Diện tích phòng" text={room.roomArea} subText="m²" />
       </View>
-      <ReviewSection reviews={reviews} />
     </ScrollView>
   );
 };

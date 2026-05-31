@@ -52,6 +52,14 @@ export const FacilityCard = ({
           />
           <Text style={cardStyles.city}>{item.cityName}</Text>
         </View>
+        <View style={styles.row}>
+          <IconButton
+            icon="heart"
+            size={12}
+            style={{ margin: 0, padding: 0, width: "auto" }}
+          />
+          <Text style={cardStyles.city}>{item.totalWishlist}</Text>
+        </View>
         <Text>
           Giá chỉ từ{" "}
           <Text style={[commonStyles.priceColor, { fontSize: 16 }]}>

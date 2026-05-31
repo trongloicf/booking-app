@@ -43,8 +43,8 @@ export default function Home() {
         ...getQueryParams(form),
       },
     });
-    console.log("cities", cityData);
   };
+  console.log("faciliti search normal", facilities);
   return (
     <View style={[commonStyles.container, { paddingTop: insets.top }]}>
       <View style={[commonStyles.extendScreen, commonStyles.flex1]}>
