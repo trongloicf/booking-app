@@ -2,8 +2,8 @@ import { User } from "@/type/interfaces/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
 
-const TOKEN_USER = Constants.expoConfig?.extra?.TOKEN_USER;
-const USER_INFO = Constants.expoConfig?.extra?.USER_INFO;
+const TOKEN_USER = Constants.expoConfig?.extra?.TOKEN_USER || "token";
+const USER_INFO = Constants.expoConfig?.extra?.USER_INFO || "user";
 
 export const storage = {
   setAuth: async (token: string, user: User) => {

@@ -1,3 +1,4 @@
+import { NoLogin } from "@/components/auth/NoLogin";
 import { BookingHorizontal } from "@/components/card/BookingHorizontal";
 import { useAuthUser } from "@/hooks/custom/useAuthUser";
 import { useInfiniteBooking } from "@/hooks/queries/useGetAllBooking";
@@ -6,7 +7,8 @@ import { getStatusInfo } from "@/utils/renderStatusEngtoVN";
 import { router } from "expo-router";
 import { useState } from "react";
 import { FlatList, ScrollView, TouchableOpacity, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const STATUS_TABS = [
   { label: "Tất cả", value: "" },
@@ -17,6 +19,7 @@ const STATUS_TABS = [
 ];
 
 export default function Booking() {
+  const insets = useSafeAreaInsets();
   const { user, isAuthenticated } = useAuthUser();
   const [status, setStatus] = useState<string>("");
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -28,33 +31,17 @@ export default function Booking() {
   console.log(bookingList);
   if (!isAuthenticated || !user)
     return (
-      <View style={commonStyles.extendScreen}>
-        <View style={[commonStyles.column, commonStyles.gap5]}>
-          <Text style={{ textAlign: "center" }}>
-            Bạn cần đăng nhập để xem lịch sử đặt phòng
-          </Text>
-          <Button
-            mode="text"
-            onPress={() => {
-              router.push({
-                pathname: "/(auth)/Login",
-              });
-            }}
-          >
-            <Text style={commonStyles.colorPrimary}>Đăng nhập</Text>
-          </Button>
-        </View>
-      </View>
+      <NoLogin title="Vui lòng đăng nhập để xem danh sách đơn đặt phòng của bạn" />
     );
   return (
-    <View style={commonStyles.container}>
+    <View style={[commonStyles.container, { paddingTop: insets.top }]}>
       <View style={[commonStyles.extendScreen, { flex: 1 }]}>
-        <View style={[commonStyles.column, commonStyles.gap5, { flex: 1 }]}>
+        <View style={[commonStyles.column, { flex: 1 }]}>
           <Text variant="titleLarge">Tất cả đơn đặt phòng</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={{ marginBottom: 10, maxHeight: 25 }}
+            style={{ maxHeight: 35 }}
           >
             {STATUS_TABS.map((tab) => {
               const isActive = tab.value === status;
@@ -64,11 +51,13 @@ export default function Booking() {
                   key={tab.label}
                   onPress={() => setStatus(tab.value)}
                   style={{
-                    paddingHorizontal: 12,
-                    paddingVertical: 6,
                     borderRadius: 20,
                     marginRight: 8,
                     backgroundColor: isActive ? "#2563eb" : "#eee",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingHorizontal: 12,
+                    height: 32,
                   }}
                 >
                   <Text style={{ color: isActive ? "#fff" : "#000" }}>

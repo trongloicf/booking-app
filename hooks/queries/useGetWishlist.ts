@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useGetWishlist = () => {
   return useQuery({
-    queryKey: ["get-wishlist"],
+    queryKey: ["get-all-wishlist"],
     queryFn: () => wishlistService.getWishlist(),
   });
 };

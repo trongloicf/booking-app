@@ -15,7 +15,7 @@ export const SelectRoomModal = ({
   onClose,
   onBooking,
 }: SelectRoomModalProps) => {
-  if (!rooms.length) return;
+  if (!rooms.length) return null;
   return (
     <View style={[roomDetailStyles.footerContainer, { flex: 1 }]}>
       {rooms.map((room) => (

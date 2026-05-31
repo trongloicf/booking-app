@@ -17,71 +17,68 @@ export const RoomHorizontal = ({
   onSelectRoom: (room: RoomFacility) => void;
   onPress: () => void;
 }) => {
-  console.log("daterange from fa -> rom hor", dateRange);
   return (
     <Card style={styles.card} onPress={onPress}>
       <View style={styles.containerInner}>
-        {item.availableQuantity > 0 && (
-          <View style={styles.row}>
-            <View style={styles.imageContainer}>
-              <Card.Cover
-                source={{ uri: item.roomThumbnail }}
-                style={styles.cover}
-              />
-            </View>
-
-            <View style={[styles.content]}>
-              <Card.Content style={styles.cardContent}>
-                <Text variant="bodyLarge" style={styles.name}>
-                  {item.roomName}
-                </Text>
-                <View style={[styles.infoRow]}>
-                  <Icon source="account" size={14} />
-                  <Text variant="bodyMedium" numberOfLines={1}>
-                    {item.maxAdults} người lớn
-                    {item.maxChildren > 0 && (
-                      <Text variant="bodyMedium">
-                        , {item.maxChildren} trẻ em
-                      </Text>
-                    )}
-                  </Text>
-                </View>
-                <View style={[styles.infoRow]}>
-                  <Icon source="bed-empty" size={16} />
-                  <Text variant="bodyMedium" numberOfLines={1}>
-                    {item.bedName}
-                  </Text>
-                  <Icon source="home-switch" size={16} />
-                  <Text variant="bodyMedium" numberOfLines={1}>
-                    {item.roomArea} m²
-                  </Text>
-                </View>
-                <View>
-                  <Text variant="bodyMedium" numberOfLines={1}>
-                    Giá:{" "}
-                    <Text style={[commonStyles.priceColor]}>
-                      {formatVND(Number(item.price))}
-                    </Text>
-                    <Text style={[commonStyles.textColorPrimary]}>/ đêm</Text>
-                  </Text>
-                </View>
-                {item.availableQuantity && (
-                  <Text style={{ color: "red" }}>
-                    Còn {item.availableQuantity} phòng trống
-                  </Text>
-                )}
-              </Card.Content>
-              <Card.Actions>
-                <Button
-                  style={[commonStyles.bgPrimary]}
-                  onPress={() => onSelectRoom(item)}
-                >
-                  <Text style={commonStyles.textWhite}>Chọn phòng</Text>
-                </Button>
-              </Card.Actions>
-            </View>
+        <View style={styles.row}>
+          <View style={styles.imageContainer}>
+            <Card.Cover
+              source={{ uri: item.roomThumbnail }}
+              style={styles.cover}
+            />
           </View>
-        )}
+
+          <View style={[styles.content]}>
+            <Card.Content style={{ paddingLeft: 8, paddingRight: 0 }}>
+              <Text variant="bodyLarge" style={styles.name}>
+                {item.roomName}
+              </Text>
+              <View style={[styles.infoRow]}>
+                <Icon source="account" size={14} />
+                <Text variant="bodyMedium" numberOfLines={1}>
+                  {item.maxAdults} người lớn
+                  {item.maxChildren > 0 && (
+                    <Text variant="bodyMedium">
+                      , {item.maxChildren} trẻ em
+                    </Text>
+                  )}
+                </Text>
+              </View>
+              <View style={[styles.infoRow]}>
+                <Icon source="bed-empty" size={16} />
+                <Text variant="bodyMedium" numberOfLines={1}>
+                  {item.bedName}
+                </Text>
+                <Icon source="home-switch" size={16} />
+                <Text variant="bodyMedium" numberOfLines={1}>
+                  {item.roomArea} m²
+                </Text>
+              </View>
+              <View>
+                <Text variant="bodyMedium" numberOfLines={1}>
+                  Giá:{" "}
+                  <Text style={[commonStyles.priceColor]}>
+                    {formatVND(Number(item.price))}
+                  </Text>
+                  <Text style={[commonStyles.textColorPrimary]}>/ đêm</Text>
+                </Text>
+              </View>
+              {item.availableQuantity && (
+                <Text style={{ color: "red" }}>
+                  Còn {item.availableQuantity} phòng trống
+                </Text>
+              )}
+            </Card.Content>
+            <Card.Actions style={{ paddingHorizontal: 0, paddingRight: 8 }}>
+              <Button
+                style={[commonStyles.bgPrimary]}
+                onPress={() => onSelectRoom(item)}
+              >
+                <Text style={commonStyles.textWhite}>Chọn phòng</Text>
+              </Button>
+            </Card.Actions>
+          </View>
+        </View>
       </View>
     </Card>
   );

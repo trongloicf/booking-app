@@ -1,6 +1,7 @@
 import { FacilityCard } from "@/components/card/card";
 import SearchBox from "@/components/search/SearchBox";
 import { useSearchForm } from "@/hooks/custom/useSearchForm";
+import { usePostWishlist } from "@/hooks/mutations/post/usePostWishlist";
 import { useGetCity } from "@/hooks/queries/useGetCity";
 import { useGetFacilities } from "@/hooks/queries/useGetFacilities";
 import { commonStyles } from "@/src/style/common";
@@ -19,6 +20,8 @@ export default function Home() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { data: cityData } = useGetCity();
+  const { mutate: toggleWishlist, isPending: isTogglingWishlist } =
+    usePostWishlist();
   const { form, updateField } = useSearchForm({
     keyword: "",
     city_id: cityData?.[0]?.city_id,
@@ -73,6 +76,7 @@ export default function Home() {
                   },
                 });
               }}
+              onLike={() => toggleWishlist(item.facilityId)}
             />
           )}
           keyExtractor={(item) => item.facilityId.toString()}

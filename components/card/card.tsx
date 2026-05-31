@@ -8,9 +8,11 @@ import { Button, Card, IconButton, Text } from "react-native-paper";
 export const FacilityCard = ({
   item,
   onPress,
+  onLike,
 }: {
   item: FacilityCardItem;
   onPress: () => void;
+  onLike?: () => void;
 }) => {
   return (
     <Card
@@ -27,7 +29,7 @@ export const FacilityCard = ({
           size={20}
           containerColor="rgba(255, 255, 255, 0.7)"
           style={{ position: "absolute", top: 8, right: 8 }}
-          onPress={() => console.log("Liked")}
+          onPress={() => onLike && onLike()}
         />
       </View>
       <Card.Content style={{ padding: 6 }}>

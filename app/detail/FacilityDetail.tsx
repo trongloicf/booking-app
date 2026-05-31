@@ -3,6 +3,7 @@ import { RoomHorizontal } from "@/components/card/RoomHorizontal";
 import { FacilityDetailHeader } from "@/components/detail/FacilityDetailHeader";
 import { PolicySection } from "@/components/detail/PolicySection";
 import { ReviewSection } from "@/components/detail/ReviewSection";
+import { Loading } from "@/components/loading/Loading";
 import { useGetDetailFacility } from "@/hooks/queries/useGetDetailFacility";
 import { commonStyles } from "@/src/style/common";
 import { RoomFacility } from "@/type/interfaces/room";
@@ -10,7 +11,6 @@ import { parseDetailParams } from "@/utils/parseSearchParams";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { FlatList, Text, View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 
 export type SelectedRoom = {
   roomId: number;
@@ -87,7 +87,7 @@ export default function FacilityDetail() {
   console.log("hm", parseParams);
   if (!result) return <Text>Không tìm thấy dữ liệu</Text>;
   if (isLoadingDetailFacility) {
-    return <ActivityIndicator animating={true} color="#ccc" />;
+    return <Loading />;
   }
 
   return (

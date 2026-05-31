@@ -1,5 +1,6 @@
 import { BOOKING_STATUS } from "@/api/constant/status";
 import { BookingDetailHorizontal } from "@/components/card/BookingDetailHorizontal";
+import { Loading } from "@/components/loading/Loading";
 import { usePutCancelBooking } from "@/hooks/mutations/put/usePutCancelBooking";
 import { useGetDetailBooking } from "@/hooks/queries/useGetDetailBooking";
 import { commonStyles } from "@/src/style/common";
@@ -9,7 +10,7 @@ import { getStatusInfo } from "@/utils/renderStatusEngtoVN";
 import { showSuccess } from "@/utils/toast";
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { ActivityIndicator, Button, Text } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 
 export default function BookingDetail() {
   const { bookingId } = useLocalSearchParams();
@@ -17,13 +18,7 @@ export default function BookingDetail() {
   const { data, isLoading, error } = useGetDetailBooking(numericBookingId);
   const { mutate: cancelBooking, isPending: isCanceling } =
     usePutCancelBooking();
-  if (isLoading) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator animating={true} color="#ccc" size="large" />
-      </View>
-    );
-  }
+  if (isLoading) return <Loading />;
 
   if (error || !numericBookingId) {
     return (
@@ -50,7 +45,11 @@ export default function BookingDetail() {
       <View
         style={[
           commonStyles.row,
-          { justifyContent: "space-between", alignContent: "center" },
+          {
+            justifyContent: "space-between",
+            alignContent: "center",
+            marginBottom: 8,
+          },
         ]}
       >
         <Text variant="titleMedium">Mã đơn: {booking.bookingCode}</Text>
@@ -67,9 +66,9 @@ export default function BookingDetail() {
           {status.label}
         </Text>
       </View>
-      <View style={{ marginBottom: 8 }}>
+      {/* <View style={{ marginBottom: 8 }}>
         <Text variant="titleMedium">{booking.facilityName}</Text>
-      </View>
+      </View> */}
       <View
         style={[
           commonStyles.row,
@@ -108,19 +107,6 @@ export default function BookingDetail() {
       >
         {booking.status === BOOKING_STATUS.PENDING && (
           <>
-            <Button
-              mode="contained"
-              style={[commonStyles.bgPrimary]}
-              //   onPress={() => {
-              //     router.push({
-              //       pathname: "/booking/edit",
-              //       params: { booking: JSON.stringify(data) },
-              //     });
-              //   }}
-            >
-              Sửa
-            </Button>
-
             <Button
               mode="contained"
               style={[commonStyles.bgPrimary]}

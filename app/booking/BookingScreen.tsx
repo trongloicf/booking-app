@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { Card, Text } from "react-native-paper";
 
@@ -30,7 +31,6 @@ import { roomDetailStyles } from "../detail/RoomDetail";
 
 export default function BookingScreen() {
   const { roomId, roomDetailData, rooms } = useRoomDetailParams();
-  console.log("rooms: ", rooms);
   const { mutate, isPending: isBooking } = usePostBooking();
   const [openModal, setOpenModal] = useState(false);
   const [openRoomGuestModal, setOpenRoomGuestModal] = useState(false);
@@ -118,11 +118,20 @@ export default function BookingScreen() {
       },
     );
   };
+  console.log("rooms: ", rooms);
   if (!rooms.length)
     return (
-      <Text style={bookingStyles.centerText}>
-        Không tìm thấy thông tin phòng
-      </Text>
+      <View
+        style={[
+          commonStyles.flex1,
+          commonStyles.bgWhite,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
+        <Text style={bookingStyles.centerText}>
+          Không tìm thấy thông tin phòng
+        </Text>
+      </View>
     );
   const nights = calculateNights(
     roomDetailData.checkin,
@@ -133,76 +142,81 @@ export default function BookingScreen() {
   }, 0);
 
   return (
-    <View style={[commonStyles.flex1, commonStyles.bgWhite]}>
-      <Card style={styles.card}>
-        <View style={[styles.containerInner, commonStyles.column]}>
-          <BookingRoomSection rooms={rooms} />
-          <View style={bookingStyles.dateSection}>
-            <BookingDateSection
-              nights={nights}
-              checkin={roomDetailData.checkin}
-              checkout={roomDetailData.checkout}
-              onChange={() => setOpenModal(true)}
-            />
-            <BookingGuestSection
-              adults={roomDetailData.adults}
-              childrens={roomDetailData.children}
-              onChange={() => setOpenRoomGuestModal(true)}
-            />
-            <View style={[bookingStyles.dateRow, bookingStyles.spaceBlock]}>
-              <View style={commonStyles.column}>
-                <Text variant="bodyMedium">Chi tiết giá cả</Text>
-                <Text variant="bodySmall" style={bookingStyles.dateText}>
-                  {nights} đêm x {formatVND(Number(totalPrice))}
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
+        <Card style={styles.card}>
+          <View style={[styles.containerInner, commonStyles.column]}>
+            <BookingRoomSection rooms={rooms} />
+            <View style={bookingStyles.dateSection}>
+              <BookingDateSection
+                nights={nights}
+                checkin={roomDetailData.checkin}
+                checkout={roomDetailData.checkout}
+                onChange={() => setOpenModal(true)}
+              />
+              <BookingGuestSection
+                adults={roomDetailData.adults}
+                childrens={roomDetailData.children}
+                onChange={() => setOpenRoomGuestModal(true)}
+              />
+              <View style={[bookingStyles.dateRow, bookingStyles.spaceBlock]}>
+                <View style={commonStyles.column}>
+                  <Text variant="bodyMedium">Chi tiết giá cả</Text>
+                  <Text variant="bodySmall" style={bookingStyles.dateText}>
+                    {nights} đêm x {formatVND(Number(totalPrice))}
+                  </Text>
+                </View>
+                <Text variant="bodyMedium">{formatVND(totalPrice)}</Text>
+              </View>
+              <View style={[bookingStyles.dateRow, bookingStyles.spaceBlock]}>
+                <Text variant="bodyLarge" style={{ fontWeight: "bold" }}>
+                  Tổng tiền
+                </Text>
+                <Text variant="bodyLarge" style={{ fontWeight: "bold" }}>
+                  {formatVND(totalPrice)}
                 </Text>
               </View>
-              <Text variant="bodyMedium">{formatVND(totalPrice)}</Text>
-            </View>
-            <View style={[bookingStyles.dateRow, bookingStyles.spaceBlock]}>
-              <Text variant="bodyLarge" style={{ fontWeight: "bold" }}>
-                Tổng tiền
-              </Text>
-              <Text variant="bodyLarge" style={{ fontWeight: "bold" }}>
-                {formatVND(totalPrice)}
-              </Text>
             </View>
           </View>
+          <BookingRGuestModal
+            visible={openRoomGuestModal}
+            value={{
+              adults: roomDetailData.adults,
+              children: roomDetailData.children,
+            }}
+            constraints={constraints}
+            onClose={() => setOpenRoomGuestModal(false)}
+            onSave={handleSaveGuest}
+          />
+          <DateRangeModal
+            visible={openModal}
+            value={{
+              checkin: roomDetailData.checkin,
+              checkout: roomDetailData.checkout,
+            }}
+            onClose={() => setOpenModal(false)}
+            onSave={handleSaveDate}
+          />
+        </Card>
+        <BookingContactSection value={contactInfo} onChange={setContactInfo} />
+        <BookingMethodSection />
+        <View style={roomDetailStyles.footerContainer}>
+          <TouchableOpacity
+            style={roomDetailStyles.bookingButton}
+            onPress={handleBooking}
+            disabled={isBooking}
+          >
+            {isBooking ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={roomDetailStyles.buttonText}>Đặt ngay</Text>
+            )}
+          </TouchableOpacity>
         </View>
-        <BookingRGuestModal
-          visible={openRoomGuestModal}
-          value={{
-            adults: roomDetailData.adults,
-            children: roomDetailData.children,
-          }}
-          constraints={constraints}
-          onClose={() => setOpenRoomGuestModal(false)}
-          onSave={handleSaveGuest}
-        />
-        <DateRangeModal
-          visible={openModal}
-          value={{
-            checkin: roomDetailData.checkin,
-            checkout: roomDetailData.checkout,
-          }}
-          onClose={() => setOpenModal(false)}
-          onSave={handleSaveDate}
-        />
-      </Card>
-      <BookingContactSection value={contactInfo} onChange={setContactInfo} />
-      <BookingMethodSection />
-      <View style={roomDetailStyles.footerContainer}>
-        <TouchableOpacity
-          style={roomDetailStyles.bookingButton}
-          onPress={handleBooking}
-          disabled={isBooking}
-        >
-          {isBooking ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={roomDetailStyles.buttonText}>Đặt ngay</Text>
-          )}
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 }

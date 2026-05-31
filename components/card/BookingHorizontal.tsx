@@ -15,7 +15,7 @@ export const BookingHorizontal = ({
 }) => {
   const status = getStatusInfo(item.status);
   return (
-    <Card style={[styles.card, { height: 100 }]} onPress={onPress}>
+    <Card style={[styles.card, { height: 125 }]} onPress={onPress}>
       <View style={styles.containerInner}>
         <View style={styles.row}>
           <View style={{ flex: 1, justifyContent: "flex-start" }}>
@@ -41,7 +41,10 @@ export const BookingHorizontal = ({
               </View>
               <View style={[commonStyles.column]}>
                 <Text variant="bodyMedium">
-                  {`Ngày nhận phòng: ${formatDateVN(item.checkout_date)}`}
+                  {`Ngày đặt: ${formatDateVN(item.created_at)}`}
+                </Text>
+                <Text variant="bodyMedium">
+                  {`Ngày nhận phòng: ${formatDateVN(item.checkin_date)}`}
                 </Text>
                 <Text variant="bodyMedium">
                   {`Ngày trả phòng: ${formatDateVN(item.checkout_date)}`}
